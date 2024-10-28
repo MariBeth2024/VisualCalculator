@@ -1,3 +1,3 @@
 # VisualCalculator
 
-This is our visual calculator.
+This is our visual calculator!
