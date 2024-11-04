@@ -50,6 +50,7 @@ h1 {
 .corrButton {
     width: 110px;
     height: 50px;
+    background-color: #C392D2;
 }
 
 #backspace {
@@ -81,6 +82,7 @@ h1 {
     height: 50px;
     margin-right: 10px;
     margin-bottom: 10px;
+    background-color: #F0C998;
 }
 
 #operContainer {
@@ -94,8 +96,16 @@ h1 {
 .oper {
     width: 50px;
     height: 50px;
+    background-color: #A0DD85;
 }
 
 button {
     font-size: 20px;
+    border: 2px solid #626161;
+    border-radius: 3px;
+    box-shadow: 3px 3px 2px #888888;
+}
+
+.neg .equals {
+    background-color: #E9A8A6;
 }
