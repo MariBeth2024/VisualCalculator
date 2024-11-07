@@ -3,6 +3,7 @@ let onNumA = true;
 let numB = "";
 let operator = "";
 let currentDisplay = document.getElementById("display");
+let equationVisual = document.getElementById("equationVisual");
 let dec = document.getElementById("dec");
 
 function add(a, b) {
@@ -43,29 +44,36 @@ function readNum(sentNum) {
     if(onNumA === true) {
         numA += sentNum;
         currentDisplay.innerHTML = numA;
+        equationVisual.innerHTML = numA;
     } else {
         numB += sentNum;
         currentDisplay.innerHTML = numA + operator + numB;
+        equationVisual.innerHTML = numA + operator + numB;
     } 
 }
 
 function readOper(sentOper) {
     if(operator) {
         currentDisplay.innerHTML = "ERROR";
+        equationVisual.innerHTML = "ERROR";
     } else {
         operator = sentOper;
         onNumA = false;
         currentDisplay.innerHTML = numA + operator;
+        equationVisual.innerHTML = numA + operator;
     }
 }
 
 function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
     if(typeof(answer) === "number") {
-        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        let currentAnswer = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        currentDisplay.innerHTML = currentAnswer
+        equationVisual.innerHTML = `${numA} ${operator} ${numB} = ${currentAnswer}`;
         numA = answer;
     } else {
         currentDisplay.innerHTML = "ERROR";
+        equationVisual.innerHTML = "ERROR";
         numA = "";
     }    
     onNumA = true;
@@ -78,6 +86,7 @@ function readClear() {
     numB = "";
     operator = "";
     currentDisplay.innerHTML = "";
+    equationVisual.innerHTML = "";
     onNumA = true;
 }
 
@@ -85,9 +94,11 @@ function readBackspace() {
     if(onNumA === true) {
         numA = numA.slice(0, -1);
         currentDisplay.innerHTML = numA;
+        equationVisual.innerHTML = numA;
     } else {
         numB = numB.slice(0, -1);
         currentDisplay.innerHTML = numA + operator + numB;
+        equationVisual.innerHTML = numA + operator + numB;
     }
 }
     

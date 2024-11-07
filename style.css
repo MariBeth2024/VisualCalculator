@@ -15,6 +15,13 @@ h1 {
     margin: 25px 0px;
 }
 
+#calculatorAll {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: flex-start;
+}
+
 #outerCalc {
     padding: 20px;
     border: 5px solid #626161;
@@ -106,6 +113,14 @@ button {
     box-shadow: 3px 3px 2px #888888;
 }
 
-.neg .equals {
+#neg, #equals {
     background-color: #E9A8A6;
+}
+
+#outerVisual {
+    border: 5px solid #626161;
+    border-radius: 10px;
+    width: 50vw;
+    height: 70vh;
+    margin-left: 50px;
 }
