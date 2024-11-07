@@ -64,7 +64,9 @@ function readOper(sentOper) {
         currentDisplay.innerHTML = numA + operator;
         equationVisual.innerHTML = numA + " " + operator;
         //create circles/dots/numberline
-        createInitialVisual();
+        if(operator === "*") {
+        createMultCircles();
+        }
     }
 }
 
@@ -73,7 +75,9 @@ function readEnter() {
     if(typeof(answer) === "number") {
         currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        createSecondVisual();
+        if(operator === "*"){
+        createMultDots();
+        }
         numA = answer;
     } else {
         currentDisplay.innerHTML = "ERROR";
@@ -108,19 +112,18 @@ function readBackspace() {
 }
     
 //function to create circles/dots/numberline
-function createInitialVisual() {
-    if(operator === "*") {
+function createMultCircles() {
+
         for (let i = 1; i <= numA; i++ ) {
         const circle = document.createElement("div");
         circle.classList.add("circle");
         circle.id = "circle" + i;
         pictureVisual.appendChild(circle);
         }
-    }
 }
 
-function createSecondVisual() {
- if(operator === "*") {
+function createMultDots() {
+
         const circles = document.querySelectorAll(".circle");
 
         circles.forEach(cir => { 
@@ -134,9 +137,8 @@ function createSecondVisual() {
             }
         cir.appendChild(dotGroup);
     })
-
  }
-}
+
     
     
 //     else if(sentVal === '.' && onNumA === true) {
