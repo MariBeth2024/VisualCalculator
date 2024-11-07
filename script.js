@@ -3,7 +3,9 @@ let onNumA = true;
 let numB = "";
 let operator = "";
 let currentDisplay = document.getElementById("display");
+let outerVisual = document.getElementById("outerVisual");
 let equationVisual = document.getElementById("equationVisual");
+let pictureVisual = document.getElementById("pictureVisual");
 let dec = document.getElementById("dec");
 
 function add(a, b) {
@@ -48,7 +50,7 @@ function readNum(sentNum) {
     } else {
         numB += sentNum;
         currentDisplay.innerHTML = numA + operator + numB;
-        equationVisual.innerHTML = numA + operator + numB;
+        equationVisual.innerHTML = numA + " " + operator + " " + numB;
     } 
 }
 
@@ -60,16 +62,17 @@ function readOper(sentOper) {
         operator = sentOper;
         onNumA = false;
         currentDisplay.innerHTML = numA + operator;
-        equationVisual.innerHTML = numA + operator;
+        equationVisual.innerHTML = numA + " " + operator;
+        //create circles/dots/numberline
+        createInitiallVisual(operator);
     }
 }
 
 function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
     if(typeof(answer) === "number") {
-        let currentAnswer = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        currentDisplay.innerHTML = currentAnswer
-        equationVisual.innerHTML = `${numA} ${operator} ${numB} = ${currentAnswer}`;
+        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         numA = answer;
     } else {
         currentDisplay.innerHTML = "ERROR";
@@ -87,6 +90,7 @@ function readClear() {
     operator = "";
     currentDisplay.innerHTML = "";
     equationVisual.innerHTML = "";
+    pictureVisual.innerHTML = "";
     onNumA = true;
 }
 
@@ -98,11 +102,21 @@ function readBackspace() {
     } else {
         numB = numB.slice(0, -1);
         currentDisplay.innerHTML = numA + operator + numB;
-        equationVisual.innerHTML = numA + operator + numB;
+        equationVisual.innerHTML = numA + " " + operator + " " + numB;
     }
 }
     
-    
+//function to create circles/dots/numberline
+function createInitiallVisual(operator) {
+    if(operator === "*") {
+        for (let i = 1; i <= numA; i++ ) {
+        const circle = document.createElement("div");
+        circle.classList.add("circle");
+        circle.id = "circle" + i;
+        pictureVisual.appendChild(circle);
+        }
+    }
+}
     
     
 //     else if(sentVal === '.' && onNumA === true) {

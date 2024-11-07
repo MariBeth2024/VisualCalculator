@@ -120,7 +120,21 @@ button {
 #outerVisual {
     border: 5px solid #626161;
     border-radius: 10px;
-    width: 50vw;
-    height: 70vh;
-    margin-left: 50px;
+    width: 70vw;
+    height: 80vh;
+    margin-left: 70px;
+}
+
+#pictureVisual {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.circle {
+    width: 150px;               /* Set width */
+    height: 150px;              /* Set height to the same as width for a circle */
+    background-color: #E9A8A6; /* Set background color */
+    border-radius: 50%;          /* Make it a circle */
+    margin: 10px;
 }
