@@ -140,7 +140,7 @@ button {
 }
 
 .dot {
-    width: 50px;               /* Set width */
+    width: 20px;               /* Set width */
     height: 20px;              /* Set height to the same as width for a circle */
     background-color: #C392D2; /* Set background color */
     border: 1px solid black;

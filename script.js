@@ -76,7 +76,7 @@ function readEnter() {
         currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         if(operator === "*"){
-        createMultDots();
+        createMultDots(numB);
         }
         numA = answer;
     } else {
@@ -122,22 +122,37 @@ function createMultCircles() {
         }
 }
 
-function createMultDots() {
+function createMultDots(numB) {
+    const circles = document.querySelectorAll(".circle");
 
-        const circles = document.querySelectorAll(".circle");
+    function appendDotGroup(index) {
+        if (index >= circles.length) return; // Stop if we've processed all circles
 
-        circles.forEach(cir => { 
-            const dotGroup = document.createElement("div");
-            dotGroup.classList.add("dotGroup");
+        const cir = circles[index];
+        const dotGroup = document.createElement("div");
+        dotGroup.classList.add("dotGroup");
 
-            for (let i = 1; i <= numB; i++) {
-                const dot = document.createElement("div");
-                dot.classList.add("dot");
-                dotGroup.appendChild(dot);
-            }
+        //creates numB dots in each group
+        for (let i = 1; i <= numB; i++) {
+            const dot = document.createElement("div");
+            dot.classList.add("dot");
+            dotGroup.appendChild(dot);
+        }
+
+        //puts group of numB dots into circle
         cir.appendChild(dotGroup);
-    })
- }
+
+        // Call the next group after a delay
+        setTimeout(() => appendDotGroup(index + 1), 500);
+    }
+
+    // Start the recursive function with the first circle
+    appendDotGroup(0);
+}
+
+function multSkipCount() {
+
+}
 
     
     
