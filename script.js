@@ -73,20 +73,24 @@ function readOper(sentOper) {
 function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
     if(typeof(answer) === "number") {
-        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         if(operator === "*"){
-        createMultDots(numB);
-        }
-        numA = answer;
+            createMultDots(numB);}
+        setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+        setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+   
     } else {
         currentDisplay.innerHTML = "ERROR";
         equationVisual.innerHTML = "ERROR";
         numA = "";
-    }    
-    onNumA = true;
-    numB = "";
-    operator = "";
+    }  
+    //reset values in function and run with setTimeout so dont mess up display
+    setTimeout((resetValues), (500*(numA+1)));
+    function resetValues() {
+        numA= answer;
+        onNumA = true;
+        numB = "";
+        operator = "";
+    }
 }
 
 function readClear() {

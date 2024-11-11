@@ -125,6 +125,12 @@ button {
     margin-left: 70px;
 }
 
+#equationVisual {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+}
+
 #pictureVisual {
     display: flex;
     flex-direction: row;
@@ -137,6 +143,28 @@ button {
     background-color: #E9A8A6; /* Set background color */
     border-radius: 50%;          /* Make it a circle */
     margin: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.countDisplay {
+    height: 30px;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+
+.dotGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 140px;
 }
 
 .dot {
@@ -145,7 +173,7 @@ button {
     background-color: #C392D2; /* Set background color */
     border: 1px solid black;
     border-radius: 50%;          /* Make it a circle */
-    margin: 10px;
+    margin: 5px;
 }
 
 /* .dotGroup {
