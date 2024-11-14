@@ -51,9 +51,6 @@ function readNum(sentNum) {
         numB += sentNum;
         currentDisplay.innerHTML = numA + operator + numB;
         equationVisual.innerHTML = numA + " " + operator + " " + numB;
-        if(operator === "/") {
-            createDivCircles();
-        }
     } 
 }
 
@@ -79,9 +76,16 @@ function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
     if(typeof(answer) === "number") {
         if(operator === "*"){
-            createMultDots(numB);}
-        setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
-        setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+            createMultDots(numB);
+            setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+            setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+        } else if(operator === "/") {
+            createDivCircles();
+            createEndDivDots(answer);
+            setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*answer));
+            setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*answer));
+        }
+    
    
     } else {
         currentDisplay.innerHTML = "ERROR";
@@ -145,7 +149,6 @@ function createMultCircles() {
 
 function createMultDots(numB) {
     const circles = document.querySelectorAll(".circle");
-    console.log(circles);
     const countDisplays = document.querySelectorAll(".countDisplay");
 
     function appendDotGroup(index) {
@@ -199,15 +202,33 @@ function createDivCircles() {
         const circle = document.createElement("div");
         circle.classList.add("circle");
         circle.id = "circle" + i;
+        const dotGroup = document.createElement("div");
+        dotGroup.classList.add("dotGroup");
         const countDisplay = document.createElement("div");
         countDisplay.classList.add("countDisplay");
 
         circleAndCount.appendChild(circle);
+        circle.appendChild(dotGroup);
         circleAndCount.appendChild(countDisplay);
         circleGroup.appendChild(circleAndCount);
     }
 
     pictureVisual.appendChild(circleGroup);
+}
+
+function createEndDivDots(answer) {
+    const dotGroups = document.querySelectorAll(".dotGroup");
+    const countDisplays = document.querySelectorAll(".countDisplays");
+
+    dotGroups.forEach((dotGroup) => {
+        for(i = 1; i <= answer; i++) {
+            const dot = document.createElement("div");
+            dot.classList.add("dot");
+            dotGroup.appendChild(dot);
+        }
+    })
+
+
 }
 
     
