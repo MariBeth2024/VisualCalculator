@@ -167,7 +167,7 @@ button {
     width: 140px;
 }
 
-.dot {
+.dot, .startDot {
     width: 20px;               /* Set width */
     height: 20px;              /* Set height to the same as width for a circle */
     background-color: #C392D2; /* Set background color */
@@ -179,3 +179,13 @@ button {
 /* .dotGroup {
     border: 2px solid black;
 } */
+
+.startDotGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+    width: 320px;
+}

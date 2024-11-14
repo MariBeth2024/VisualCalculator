@@ -65,7 +65,9 @@ function readOper(sentOper) {
         equationVisual.innerHTML = numA + " " + operator;
         //create circles/dots/numberline
         if(operator === "*") {
-        createMultCircles();
+            createMultCircles();
+        } else if(operator === "/") {
+            createStartDivDots();
         }
     }
 }
@@ -135,6 +137,7 @@ function createMultCircles() {
 
 function createMultDots(numB) {
     const circles = document.querySelectorAll(".circle");
+    console.log(circles);
     const countDisplays = document.querySelectorAll(".countDisplay");
 
     function appendDotGroup(index) {
@@ -166,7 +169,18 @@ function createMultDots(numB) {
     appendDotGroup(0);
 }
 
-    
+function createStartDivDots() {
+    const startDotGroup = document.createElement("div");
+    startDotGroup.classList.add("startDotGroup");
+    for (let i = 1; i <= numA; i++ ) {
+        const startDot = document.createElement("div");
+        startDot.classList.add("startDot");
+        startDot.id = "startDot" + i;
+        startDotGroup.appendChild(startDot);
+    }
+    pictureVisual.appendChild(startDotGroup);
+};
+
     
 //     else if(sentVal === '.' && onNumA === true) {
 //         numA += sentVal;
