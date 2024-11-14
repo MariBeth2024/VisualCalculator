@@ -133,6 +133,12 @@ button {
 
 #pictureVisual {
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#circleGroup {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }

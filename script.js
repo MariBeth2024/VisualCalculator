@@ -51,6 +51,9 @@ function readNum(sentNum) {
         numB += sentNum;
         currentDisplay.innerHTML = numA + operator + numB;
         equationVisual.innerHTML = numA + " " + operator + " " + numB;
+        if(operator === "/") {
+            createDivCircles();
+        }
     } 
 }
 
@@ -120,7 +123,10 @@ function readBackspace() {
 //function to create circles/dots/numberline
 function createMultCircles() {
 
-        for (let i = 1; i <= numA; i++ ) {
+    const circleGroup = document.createElement("div");
+    circleGroup.id = "circleGroup";
+
+    for (let i = 1; i <= numA; i++ ) {
         const circleAndCount = document.createElement("div");
         circleAndCount.classList.add("circleAndCount");
         const circle = document.createElement("div");
@@ -131,8 +137,10 @@ function createMultCircles() {
 
         circleAndCount.appendChild(circle);
         circleAndCount.appendChild(countDisplay);
-        pictureVisual.appendChild(circleAndCount);
-        }
+        circleGroup.appendChild(circleAndCount);
+    }
+
+    pictureVisual.appendChild(circleGroup);
 }
 
 function createMultDots(numB) {
@@ -180,6 +188,27 @@ function createStartDivDots() {
     }
     pictureVisual.appendChild(startDotGroup);
 };
+
+function createDivCircles() {
+    const circleGroup = document.createElement("div");
+    circleGroup.id = "circleGroup";
+
+    for (let i = 1; i <= numB; i++ ) {
+        const circleAndCount = document.createElement("div");
+        circleAndCount.classList.add("circleAndCount");
+        const circle = document.createElement("div");
+        circle.classList.add("circle");
+        circle.id = "circle" + i;
+        const countDisplay = document.createElement("div");
+        countDisplay.classList.add("countDisplay");
+
+        circleAndCount.appendChild(circle);
+        circleAndCount.appendChild(countDisplay);
+        circleGroup.appendChild(circleAndCount);
+    }
+
+    pictureVisual.appendChild(circleGroup);
+}
 
     
 //     else if(sentVal === '.' && onNumA === true) {
