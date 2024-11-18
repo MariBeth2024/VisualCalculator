@@ -241,7 +241,7 @@ function createEndDivDots(answer) {
     for (let i = 1; i <= answer; i++) {
         dotGroups.forEach((dotGroup) => {
             const dot = document.createElement("div");
-            dot.classList.add("dot", "fade-target", "fade-out");
+            dot.classList.add("dot", "fade-target");
             dot.dataset.id = i;
             dotGroup.appendChild(dot);
         });
@@ -252,7 +252,7 @@ function createEndDivDots(answer) {
         setTimeout(() => {
             const dotsToFadeIn = document.querySelectorAll(`.dot[data-id="${i}"]`);
             dotsToFadeIn.forEach((dot) => {
-                dot.classList.remove("fade-out");
+                // dot.classList.remove("fade-out");
                 dot.classList.add("fade-in");
             });
         }, i * 1000);
