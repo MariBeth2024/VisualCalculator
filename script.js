@@ -74,17 +74,34 @@ function readOper(sentOper) {
 
 function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
+
     if(typeof(answer) === "number") {
-        if(operator === "*"){
+        if(operator === "+") {
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+        } else if(operator === "-") {
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+        } else if(operator === "*") {
             createMultDots(numB);
             setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
             setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
         } else if(operator === "/") {
+            let answerRounded = Math.floor(answer);
+            let remainder = numA % numB;
             createDivCircles();
-            createEndDivDots(answer);
-            setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*answer));
-            setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*answer));
-        }
+            createEndDivDots(answerRounded);
+            setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (1000*(answer+1)));
+            if(!remainder) {
+                setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (1000*(answer+1)));
+            } else {
+                setTimeout(() => {
+                    equationVisual.innerHTML = 
+                        numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answerRounded + 'e' + 7) + "e-" + 7) + " with remainder " + remainder
+                }, (1000*(answerRounded+1)));
+            };
+            
+        } 
     
    
     } else {
@@ -185,7 +202,7 @@ function createStartDivDots() {
     startDotGroup.classList.add("startDotGroup");
     for (let i = 1; i <= numA; i++ ) {
         const startDot = document.createElement("div");
-        startDot.classList.add("startDot");
+        startDot.classList.add("startDot", "fade-out");
         startDot.id = "startDot" + i;
         startDotGroup.appendChild(startDot);
     }
@@ -218,51 +235,39 @@ function createDivCircles() {
 
 function createEndDivDots(answer) {
     const dotGroups = document.querySelectorAll(".dotGroup");
-    const countDisplays = document.querySelectorAll(".countDisplays");
+    // const countDisplays = document.querySelectorAll(".countDisplays");
 
-    dotGroups.forEach((dotGroup) => {
-        for(i = 1; i <= answer; i++) {
+    // uses the "answer" variable to add hidden dots to the circles
+    for (let i = 1; i <= answer; i++) {
+        dotGroups.forEach((dotGroup) => {
             const dot = document.createElement("div");
-            dot.classList.add("dot");
+            dot.classList.add("dot", "fade-target", "fade-out");
+            dot.dataset.id = i;
             dotGroup.appendChild(dot);
-        }
-    })
+        });
+    };
 
+    // fades in the hidden dots making them visible in the circles one at a time
+    for (let i = 1; i <= answer; i++) {
+        setTimeout(() => {
+            const dotsToFadeIn = document.querySelectorAll(`.dot[data-id="${i}"]`);
+            dotsToFadeIn.forEach((dot) => {
+                dot.classList.remove("fade-out");
+                dot.classList.add("fade-in");
+            });
+        }, i * 1000);
+    }
+
+    // fades out the startDots in groups of numB
+    for (let j = 0; j < answer; j++) {
+        setTimeout(() => {
+            for (let k = 1; k <= numB; k++) {
+                const startDot = document.querySelector(`#startDot${j * numB + k}`);
+                if (startDot) {
+                    startDot.classList.add("hidden"); 
+                }
+            }
+        }, j * 1000 + 500);
+    }
 
 }
-
-    
-//     else if(sentVal === '.' && onNumA === true) {
-//         numA += sentVal;
-//         dec.disabled = true;
-//         currentDisplay.innerHTML = numA;
-//     } else if(sentVal === '.' && onNumA === false) {
-//         numB += sentVal;
-//         dec.disabled = true;
-//         currentDisplay.innerHTML = numA + operator + numB;
-//     } else if(sentVal === '+' || sentVal === '-' || sentVal === '*' || sentVal === '/') {
-//         operator = sentVal;
-//         onNumA = false;
-//         dec.disabled = false;
-//         currentDisplay.innerHTML = numA + operator;
-//     } else if(sentVal === '=') {
-//         let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
-//         currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-//         numA = answer;
-//         dec.disabled = false;
-//     } else if(sentVal === 'b' && onNumA === true) {
-//         numA = numA.slice(0, -1);
-//         currentDisplay.innerHTML = numA;
-//     } else if(sentVal === 'b' && onNumA === false) {
-//         numB = numB.slice(0, -1);
-//         currentDisplay.innerHTML = numA + operator + numB;
-//     } else if(sentVal === 'c') {
-//         numA = "";
-//         numB = "";
-//         operator = "";
-//         currentDisplay.innerHTML = "";
-//         dec.disabled = false;
-//         onNumA = true;
-//     }
-    
-// }
