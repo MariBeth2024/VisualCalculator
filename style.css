@@ -61,7 +61,7 @@ h1 {
 }
 
 #backspace {
-    font-size: 12px;
+    font-size: 30px;
 }
 
 #squareButtonContainer {
@@ -111,6 +111,12 @@ button {
     border: 2px solid #626161;
     border-radius: 3px;
     box-shadow: 3px 3px 2px #888888;
+}
+
+button:active {
+    transform: translateY(5px);
+    transform: translateX(3px);
+    box-shadow: 2px 2px 1px #888888;
 }
 
 #neg, #equals {
