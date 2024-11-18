@@ -139,6 +139,12 @@ button:active {
 
 #pictureVisual {
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#circleGroup {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
@@ -173,7 +179,7 @@ button:active {
     width: 140px;
 }
 
-.dot {
+.dot, .startDot {
     width: 20px;               /* Set width */
     height: 20px;              /* Set height to the same as width for a circle */
     background-color: #C392D2; /* Set background color */
@@ -182,6 +188,40 @@ button:active {
     margin: 5px;
 }
 
+/* Classes fade-out and hidden are targeted at the startDots for division. 
+They begin with an opacity of 1 and then fade to 0. */
+
+.fade-out {
+    opacity: 1;
+}
+
+.fade-out.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+/* Classes fade-target and fade-in are targeted at the dots within the circles for division.
+They begin with an opacity of 0 and then fade to 1. */
+
+.fade-target {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+.fade-target.fade-in {
+    opacity: 1;
+}
+
 /* .dotGroup {
     border: 2px solid black;
 } */
+
+.startDotGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+    width: 320px;
+}

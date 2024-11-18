@@ -65,18 +65,44 @@ function readOper(sentOper) {
         equationVisual.innerHTML = numA + " " + operator;
         //create circles/dots/numberline
         if(operator === "*") {
-        createMultCircles();
+            createMultCircles();
+        } else if(operator === "/") {
+            createStartDivDots();
         }
     }
 }
 
 function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
+
     if(typeof(answer) === "number") {
-        if(operator === "*"){
-            createMultDots(numB);}
-        setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
-        setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+        if(operator === "+") {
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+        } else if(operator === "-") {
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+        } else if(operator === "*") {
+            createMultDots(numB);
+            setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+            setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+        } else if(operator === "/") {
+            let answerRounded = Math.floor(answer);
+            let remainder = numA % numB;
+            createDivCircles();
+            createEndDivDots(answerRounded);
+            setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (1000*(answer+1)));
+            if(!remainder) {
+                setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (1000*(answer+1)));
+            } else {
+                setTimeout(() => {
+                    equationVisual.innerHTML = 
+                        numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answerRounded + 'e' + 7) + "e-" + 7) + " with remainder " + remainder
+                }, (1000*(answerRounded+1)));
+            };
+            
+        } 
+    
    
     } else {
         currentDisplay.innerHTML = "ERROR";
@@ -118,7 +144,10 @@ function readBackspace() {
 //function to create circles/dots/numberline
 function createMultCircles() {
 
-        for (let i = 1; i <= numA; i++ ) {
+    const circleGroup = document.createElement("div");
+    circleGroup.id = "circleGroup";
+
+    for (let i = 1; i <= numA; i++ ) {
         const circleAndCount = document.createElement("div");
         circleAndCount.classList.add("circleAndCount");
         const circle = document.createElement("div");
@@ -129,8 +158,10 @@ function createMultCircles() {
 
         circleAndCount.appendChild(circle);
         circleAndCount.appendChild(countDisplay);
-        pictureVisual.appendChild(circleAndCount);
-        }
+        circleGroup.appendChild(circleAndCount);
+    }
+
+    pictureVisual.appendChild(circleGroup);
 }
 
 function createMultDots(numB) {
@@ -166,39 +197,77 @@ function createMultDots(numB) {
     appendDotGroup(0);
 }
 
-    
-    
-//     else if(sentVal === '.' && onNumA === true) {
-//         numA += sentVal;
-//         dec.disabled = true;
-//         currentDisplay.innerHTML = numA;
-//     } else if(sentVal === '.' && onNumA === false) {
-//         numB += sentVal;
-//         dec.disabled = true;
-//         currentDisplay.innerHTML = numA + operator + numB;
-//     } else if(sentVal === '+' || sentVal === '-' || sentVal === '*' || sentVal === '/') {
-//         operator = sentVal;
-//         onNumA = false;
-//         dec.disabled = false;
-//         currentDisplay.innerHTML = numA + operator;
-//     } else if(sentVal === '=') {
-//         let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
-//         currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-//         numA = answer;
-//         dec.disabled = false;
-//     } else if(sentVal === 'b' && onNumA === true) {
-//         numA = numA.slice(0, -1);
-//         currentDisplay.innerHTML = numA;
-//     } else if(sentVal === 'b' && onNumA === false) {
-//         numB = numB.slice(0, -1);
-//         currentDisplay.innerHTML = numA + operator + numB;
-//     } else if(sentVal === 'c') {
-//         numA = "";
-//         numB = "";
-//         operator = "";
-//         currentDisplay.innerHTML = "";
-//         dec.disabled = false;
-//         onNumA = true;
-//     }
-    
-// }
+function createStartDivDots() {
+    const startDotGroup = document.createElement("div");
+    startDotGroup.classList.add("startDotGroup");
+    for (let i = 1; i <= numA; i++ ) {
+        const startDot = document.createElement("div");
+        startDot.classList.add("startDot", "fade-out");
+        startDot.id = "startDot" + i;
+        startDotGroup.appendChild(startDot);
+    }
+    pictureVisual.appendChild(startDotGroup);
+};
+
+function createDivCircles() {
+    const circleGroup = document.createElement("div");
+    circleGroup.id = "circleGroup";
+
+    for (let i = 1; i <= numB; i++ ) {
+        const circleAndCount = document.createElement("div");
+        circleAndCount.classList.add("circleAndCount");
+        const circle = document.createElement("div");
+        circle.classList.add("circle");
+        circle.id = "circle" + i;
+        const dotGroup = document.createElement("div");
+        dotGroup.classList.add("dotGroup");
+        const countDisplay = document.createElement("div");
+        countDisplay.classList.add("countDisplay");
+
+        circleAndCount.appendChild(circle);
+        circle.appendChild(dotGroup);
+        circleAndCount.appendChild(countDisplay);
+        circleGroup.appendChild(circleAndCount);
+    }
+
+    pictureVisual.appendChild(circleGroup);
+}
+
+function createEndDivDots(answer) {
+    const dotGroups = document.querySelectorAll(".dotGroup");
+    // const countDisplays = document.querySelectorAll(".countDisplays");
+
+    // uses the "answer" variable to add hidden dots to the circles
+    for (let i = 1; i <= answer; i++) {
+        dotGroups.forEach((dotGroup) => {
+            const dot = document.createElement("div");
+            dot.classList.add("dot", "fade-target");
+            dot.dataset.id = i;
+            dotGroup.appendChild(dot);
+        });
+    };
+
+    // fades in the hidden dots making them visible in the circles one at a time
+    for (let i = 1; i <= answer; i++) {
+        setTimeout(() => {
+            const dotsToFadeIn = document.querySelectorAll(`.dot[data-id="${i}"]`);
+            dotsToFadeIn.forEach((dot) => {
+                // dot.classList.remove("fade-out");
+                dot.classList.add("fade-in");
+            });
+        }, i * 1000);
+    }
+
+    // fades out the startDots in groups of numB
+    for (let j = 0; j < answer; j++) {
+        setTimeout(() => {
+            for (let k = 1; k <= numB; k++) {
+                const startDot = document.querySelector(`#startDot${j * numB + k}`);
+                if (startDot) {
+                    startDot.classList.add("hidden"); 
+                }
+            }
+        }, j * 1000 + 500);
+    }
+
+}
