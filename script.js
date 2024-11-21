@@ -67,6 +67,9 @@ function readOper(sentOper) {
         if(operator === "*") {
         createMultCircles();
         }
+        if(operator === "+") {
+            createAddLine(numA);
+        }
     }
 }
 

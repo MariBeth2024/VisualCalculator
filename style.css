@@ -185,3 +185,19 @@ button:active {
 /* .dotGroup {
     border: 2px solid black;
 } */
+
+.horizontalLine {
+    background-color: black;
+    height: 10px;
+    width: 90%;
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.verticalLine {
+    background-color: black;
+    height: 40px;
+    width: 5px;
+    margin-left: 10px;
+}
