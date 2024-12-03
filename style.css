@@ -186,18 +186,27 @@ button:active {
     border: 2px solid black;
 } */
 
-.horizontalLine {
+#horizontalLine {
     background-color: black;
     height: 10px;
     width: 90%;
     margin-top: 100px;
     display: flex;
-    align-items: center;
+    align-items:center;
 }
 
 .verticalLine {
     background-color: black;
     height: 40px;
     width: 5px;
-    margin-left: 10px;
+    margin-bottom: 5px;
+    margin-top: 35px;
+    margin-right: 20px;
+    margin-left: 15px;
+}
+
+.jumpDiv {
+    display: flex;
+    flex-direction: column;
+    align-items:end;
 }

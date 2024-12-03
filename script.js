@@ -77,10 +77,15 @@ function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
     if(typeof(answer) === "number") {
         if(operator === "*"){
-            createMultDots(numB);}
+            createMultDots(numB);
         setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
         setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
-   
+        }
+        if (operator === "+") {
+            fillInNumberLine(numB);
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        }
     } else {
         currentDisplay.innerHTML = "ERROR";
         equationVisual.innerHTML = "ERROR";
