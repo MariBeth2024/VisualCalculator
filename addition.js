@@ -115,7 +115,7 @@ function colorArrows() {
     arrows.forEach((arrow, index) => {
         setTimeout(() => {
             arrow.classList.add("display");
-        }, index * 500);
+        }, index * 1000);
     });
 }
 
