@@ -2,24 +2,28 @@
 
 //run when operation is pressed
 function createAddLine(numA) {
-//create numberline of entire container length
     const pictureVisualDiv = document.getElementById("pictureVisual");
-    const horizontalLine = document.createElement("div");
-    horizontalLine.id= "horizontalLine";
-    pictureVisualDiv.appendChild(horizontalLine);
 
     //place numA at beginning of numberline 
-    const verticalDiv = document.createElement("div");
-    verticalDiv.classList.add("verticalDiv");
-    const startVertical = document.createElement("div");
-    startVertical.classList.add("verticalLine");
-    const startNumber = document.createElement("div")
-    startNumber.classList.add("countDisplay");
-    startNumber.innerHTML= numA;
-    verticalDiv.appendChild(startVertical);
-    verticalDiv.appendChild(startNumber);
-    horizontalLine.appendChild(verticalDiv);
-    
+        const additionContainer = document.createElement("div");
+        additionContainer.id= "additionContainer";
+        pictureVisualDiv.appendChild(additionContainer);
+        const startVerticalContainer = document.createElement("div");
+        startVerticalContainer.classList.add("startVerticalContainer");
+        const startVerticalLine = document.createElement("div");
+        startVerticalLine.classList.add("startVerticalLine");
+        const startNumber = document.createElement("div")
+        startNumber.classList.add("countDisplay");
+        startNumber.innerHTML= numA;
+        startVerticalContainer.appendChild(startVerticalLine);
+        startVerticalContainer.appendChild(startNumber);
+        additionContainer.appendChild(startVerticalContainer);
+
+    //create numberline of entire container length
+        const horizontalLine = document.createElement("div");
+        horizontalLine.id= "horizontalLine";
+        additionContainer.appendChild(horizontalLine);
+        
     //highlight num on number line
 }
 // Attach to the global scope
@@ -38,8 +42,7 @@ const horizontalLine = document.getElementById("horizontalLine");
 let total = parseInt(numA);
 
 const numBArray = numB.split("")
-console.log("numB:", numB);
-console.log("numBArray:", numBArray, "numBArray.length:", numBArray.length);
+
  if (numBArray.length === 3) {
   hundreds = parseInt(numBArray[0]);
   tens = parseInt(numBArray[1]);
@@ -53,61 +56,55 @@ console.log("numBArray:", numBArray, "numBArray.length:", numBArray.length);
   tens = 0;
   ones = parseInt(numBArray[0]);
  }
-
-console.log("hundreds, tens, ones:", hundreds, tens, ones);
  //calculate numberline 
- let units = horizontalLine.offsetWidth/((hundreds*3)+(tens*2)+ones);
-console.log("units:", units);
+ let units = (horizontalLine.offsetWidth)/((hundreds*3)+(tens*2)+ones);
 
- if (hundreds > 0) { 
-    for (let i =1; i<=hundreds; i++) {
-        const hundredsDiv = document.createElement("div");
-        hundredsDiv.classList.add("jumpDiv");
-        hundredsDiv.style.width= (units*3) + "px";
-        horizontalLine.appendChild(hundredsDiv);
+function createAndAppendDivs(width, increment) {
+    const jumpDiv = document.createElement("div");
+        jumpDiv.classList.add("jumpDiv");
+        jumpDiv.style.width= width + "px";
+        horizontalLine.appendChild(jumpDiv);
+        //arrow
+        const arrowContainer = document.createElement("div");
+        arrowContainer.classList.add("arrowContainer");
+        const arrowDiv = document.createElement("div");
+        arrowDiv.classList.add("arrowDiv");
+        const arrowDivInner = document.createElement("div");
+        arrowDivInner.classList.add("arrowDivInner");
+        //set div widths
+        arrowContainer.style.width= width + "px";
+        //append divs
+        arrowContainer.appendChild(arrowDiv);
+        arrowContainer.appendChild(arrowDivInner);
+        jumpDiv.appendChild(arrowContainer);  
         //counting lines and numbers
+        const countingContainer = document.createElement("div");
+        countingContainer.classList.add("countingContainer");
         const countingLine = document.createElement("div");
         countingLine.classList.add("verticalLine");
         let countNumber = document.createElement("div");
         countNumber.classList.add("countDisplay");
-        countNumber.innerHTML= total+=100;
-        hundredsDiv.appendChild(countingLine);
-        hundredsDiv.appendChild(countNumber);
+        countNumber.innerHTML= total+=increment;
+        countingContainer.appendChild(countingLine);
+        countingContainer.appendChild(countNumber);  
+        jumpDiv.appendChild(countingContainer);
+}
+
+
+ if (hundreds > 0) { 
+    for (let i =1; i<=hundreds; i++) {
+       createAndAppendDivs(units*3, 100);
     }
  }
  if (tens > 0) {
     for (let i =1; i<=tens; i++) {
-        const tensDiv = document.createElement("div");
-        tensDiv.classList.add("jumpDiv");
-        tensDiv.style.width= (units*2) + "px";
-        horizontalLine.appendChild(tensDiv);
-        //counting lines and numbers
-        const countingLine = document.createElement("div");
-        countingLine.classList.add("verticalLine");
-        let countNumber = document.createElement("div");
-        countNumber.classList.add("countDisplay");
-        countNumber.innerHTML= total+=10;
-        tensDiv.appendChild(countingLine);
-        tensDiv.appendChild(countNumber);
+        createAndAppendDivs(units*2, 10);
     }
  }
  if (ones > 0) {
     for (let i =1; i<=ones; i++) {
-        const onesDiv = document.createElement("div");
-        onesDiv.classList.add("jumpDiv");
-        onesDiv.style.width= (units) + "px";
-        horizontalLine.appendChild(onesDiv);        
-        //counting lines and numbers
-        const countingLine = document.createElement("div");
-        countingLine.classList.add("verticalLine");
-        let countNumber = document.createElement("div");
-        countNumber.classList.add("countDisplay");
-        countNumber.innerHTML= total+=1;
-        onesDiv.appendChild(countingLine);
-        onesDiv.appendChild(countNumber);
+        createAndAppendDivs(units, 1);
     }
  }
 }
 window.fillInNumberLine = fillInNumberLine;
-
-//call arrow functions- display +100, +10, +1 with each jump 
