@@ -83,6 +83,7 @@ function readEnter() {
         }
         if (operator === "+") {
             fillInNumberLine(numB);
+            colorArrows();
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         }

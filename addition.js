@@ -108,3 +108,15 @@ function createAndAppendDivs(width, increment) {
  }
 }
 window.fillInNumberLine = fillInNumberLine;
+
+function colorArrows() {
+    const arrows = document.querySelectorAll(".arrowDiv");
+    
+    arrows.forEach((arrow, index) => {
+        setTimeout(() => {
+            arrow.classList.add("display");
+        }, index * 500);
+    });
+}
+
+window.colorArrows= colorArrows;
