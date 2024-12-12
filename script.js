@@ -43,6 +43,7 @@ function doOperation(firstNum, secondNum, operation) {
 }
 
 function readNum(sentNum) {
+    console.log(numA);
     if(onNumA === true) {
         numA += sentNum;
         currentDisplay.innerHTML = numA;
@@ -68,7 +69,7 @@ function readOper(sentOper) {
         createMultCircles();
         }
         if(operator === "+") {
-            createAddLine(numA);
+            createAddLine();
         }
     }
 }
@@ -104,6 +105,7 @@ function readEnter() {
 
 function readClear() {
     numA = "";
+    console.log(numA);
     numB = "";
     operator = "";
     currentDisplay.innerHTML = "";

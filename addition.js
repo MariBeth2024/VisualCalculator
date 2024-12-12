@@ -1,7 +1,7 @@
 
 
 //run when operation is pressed
-function createAddLine(numA) {
+function createAddLine() {
     const pictureVisualDiv = document.getElementById("pictureVisual");
 
     //place numA at beginning of numberline 
@@ -57,7 +57,8 @@ const numBArray = numB.split("")
   ones = parseInt(numBArray[0]);
  }
  //calculate numberline 
- let units = (horizontalLine.offsetWidth)/((hundreds*3)+(tens*2)+ones);
+//  if () {}
+ let units = (horizontalLine.offsetWidth)/((hundreds*4)+(tens*2)+ones);
 
 function createAndAppendDivs(width, increment) {
     const jumpDiv = document.createElement("div");
@@ -71,8 +72,10 @@ function createAndAppendDivs(width, increment) {
         arrowDiv.classList.add("arrowDiv");
         const arrowDivInner = document.createElement("div");
         arrowDivInner.classList.add("arrowDivInner");
+
         //set div widths
         arrowContainer.style.width= width + "px";
+        arrowContainer.style.height= (width/3) + "px";
         //append divs
         arrowContainer.appendChild(arrowDiv);
         arrowContainer.appendChild(arrowDivInner);
@@ -93,7 +96,7 @@ function createAndAppendDivs(width, increment) {
 
  if (hundreds > 0) { 
     for (let i =1; i<=hundreds; i++) {
-       createAndAppendDivs(units*3, 100);
+       createAndAppendDivs(units*4, 100);
     }
  }
  if (tens > 0) {
@@ -115,7 +118,7 @@ function colorArrows() {
     arrows.forEach((arrow, index) => {
         setTimeout(() => {
             arrow.classList.add("display");
-        }, index * 1000);
+        }, index * 500);
     });
 }
 

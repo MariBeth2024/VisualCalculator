@@ -197,14 +197,14 @@ button:active {
     display: flex;
     flex-direction: row;
     width: 100%;
-    padding-top: 100px;
+    padding-top: 200px;
 }
 
 #horizontalLine {
     background-color: black;
     box-sizing: content-box;
     height: 10px;
-    width: 95%;
+    width: 100%;
     margin-top: 15px;
     display: flex;
     align-items:center;
@@ -248,7 +248,7 @@ button:active {
     position: relative;
     display: inline-block;
     overflow: hidden;
-    height: 80px;
+    /* height: 100px; */
   }
   
   .arrowDiv {
@@ -259,7 +259,7 @@ button:active {
     background: linear-gradient(to right, blue 50%, white 50%);
     background-size: 200% 100%;
     background-position: right bottom;
-    transition: all .2s;
+    transition: all .3s;
     border-radius: 50%;
   }
   
