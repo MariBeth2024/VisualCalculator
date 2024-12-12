@@ -2,27 +2,33 @@
 
 //run when operation is pressed
 function createAddLine() {
-    const pictureVisualDiv = document.getElementById("pictureVisual");
+    const pictureVisualDiv = document.getElementById("pictureVisual"); 
 
-    //place numA at beginning of numberline 
+        //create numberline of entire container length
         const additionContainer = document.createElement("div");
-        additionContainer.id= "additionContainer";
+        additionContainer.id = "additionContainer";
+        const arrowContainer = document.createElement("div");
+        arrowContainer.id= "arrowContainer";
+        const numberLineDiv = document.createElement("div");
+        numberLineDiv.id = "numberLineDiv";        
+        const horizontalLine = document.createElement("div");
+        horizontalLine.id= "horizontalLine";
+        numberLineDiv.appendChild(horizontalLine);
+        additionContainer.appendChild(arrowContainer);
+        additionContainer.appendChild(numberLineDiv);
         pictureVisualDiv.appendChild(additionContainer);
+
+        //place numA at beginning of numberline
         const startVerticalContainer = document.createElement("div");
         startVerticalContainer.classList.add("startVerticalContainer");
         const startVerticalLine = document.createElement("div");
-        startVerticalLine.classList.add("startVerticalLine");
+        startVerticalLine.classList.add("verticalLine");
         const startNumber = document.createElement("div")
         startNumber.classList.add("countDisplay");
         startNumber.innerHTML= numA;
         startVerticalContainer.appendChild(startVerticalLine);
         startVerticalContainer.appendChild(startNumber);
-        additionContainer.appendChild(startVerticalContainer);
-
-    //create numberline of entire container length
-        const horizontalLine = document.createElement("div");
-        horizontalLine.id= "horizontalLine";
-        additionContainer.appendChild(horizontalLine);
+        numberLineDiv.appendChild(startVerticalContainer);
         
     //highlight num on number line
 }
@@ -39,6 +45,8 @@ let hundreds;
 let tens;
 let ones;
 const horizontalLine = document.getElementById("horizontalLine");
+const arrowContainer = document.getElementById("arrowContainer");
+const numberLineDiv = document.getElementById("numberLineDiv");
 let total = parseInt(numA);
 
 const numBArray = numB.split("")
@@ -57,40 +65,32 @@ const numBArray = numB.split("")
   ones = parseInt(numBArray[0]);
  }
  //calculate numberline 
-//  if () {}
+ console.log(horizontalLine.offsetWidth);
  let units = (horizontalLine.offsetWidth)/((hundreds*4)+(tens*2)+ones);
 
 function createAndAppendDivs(width, increment) {
-    const jumpDiv = document.createElement("div");
-        jumpDiv.classList.add("jumpDiv");
-        jumpDiv.style.width= width + "px";
-        horizontalLine.appendChild(jumpDiv);
+
         //arrow
-        const arrowContainer = document.createElement("div");
-        arrowContainer.classList.add("arrowContainer");
-        const arrowDiv = document.createElement("div");
+        const arrowDiv = document.createElement("canvas");
         arrowDiv.classList.add("arrowDiv");
-        const arrowDivInner = document.createElement("div");
-        arrowDivInner.classList.add("arrowDivInner");
+        arrowContainer.appendChild(arrowDiv);
 
         //set div widths
-        arrowContainer.style.width= width + "px";
-        arrowContainer.style.height= (width/3) + "px";
-        //append divs
-        arrowContainer.appendChild(arrowDiv);
-        arrowContainer.appendChild(arrowDivInner);
-        jumpDiv.appendChild(arrowContainer);  
+        arrowDiv.style.width= width + "px";
+        arrowDiv.style.height= (width/3) + "px";
+    
         //counting lines and numbers
         const countingContainer = document.createElement("div");
         countingContainer.classList.add("countingContainer");
+        countingContainer.style.width= width + "px";
         const countingLine = document.createElement("div");
         countingLine.classList.add("verticalLine");
-        let countNumber = document.createElement("div");
+        const countNumber = document.createElement("div");
         countNumber.classList.add("countDisplay");
         countNumber.innerHTML= total+=increment;
         countingContainer.appendChild(countingLine);
         countingContainer.appendChild(countNumber);  
-        jumpDiv.appendChild(countingContainer);
+        horizontalLine.appendChild(countingContainer);
 }
 
 
