@@ -46,7 +46,6 @@ let tens;
 let ones;
 const horizontalLine = document.getElementById("horizontalLine");
 const arrowContainer = document.getElementById("arrowContainer");
-const numberLineDiv = document.getElementById("numberLineDiv");
 let total = parseInt(numA);
 
 const numBArray = numB.split("")
@@ -68,17 +67,46 @@ const numBArray = numB.split("")
  console.log(horizontalLine.offsetWidth);
  let units = (horizontalLine.offsetWidth)/((hundreds*4)+(tens*2)+ones);
 
+//arrow animation setup
+const spriteWidth = 190;
+const spriteHeight = 130;
+const spriteAnimations = [];
+const animationStates = [
+    {
+        name: 'leftArrow',
+        frames: 6,
+    },
+    {
+        name: 'rightArrow',
+        frames: 6,
+    },
+]
+
+let accumulator = 0;
+animationStates.forEach((state, index) => {
+    let frames = {
+        loc: [],
+    }
+    for (let j = 0; j < state.frames; j++) {
+        let positionSpriteFrame = j * spriteHeight;
+        let positionSpriteNum = accumulator * spriteHeight;
+        frames.loc.push({x: 0, y: positionSpriteNum + positionSpriteFrame});        
+    }
+    accumulator += state.frames;
+    spriteAnimations[state.name] = frames;
+});
+
 function createAndAppendDivs(width, increment) {
 
         //arrow
         const arrowDiv = document.createElement("canvas");
+        const ctx = arrowDiv.getContext("2d");
         arrowDiv.classList.add("arrowDiv");
-        arrowContainer.appendChild(arrowDiv);
-
         //set div widths
-        arrowDiv.style.width= width + "px";
-        arrowDiv.style.height= (width/3) + "px";
-    
+        arrowDiv.width = width;
+        //height needs to match the width 190/1.46=130 -- keeps ratio the same
+        arrowDiv.height = (width/1.46);
+
         //counting lines and numbers
         const countingContainer = document.createElement("div");
         countingContainer.classList.add("countingContainer");
@@ -88,11 +116,48 @@ function createAndAppendDivs(width, increment) {
         const countNumber = document.createElement("div");
         countNumber.classList.add("countDisplay");
         countNumber.innerHTML= total+=increment;
+
         countingContainer.appendChild(countingLine);
         countingContainer.appendChild(countNumber);  
         horizontalLine.appendChild(countingContainer);
-}
+        arrowContainer.appendChild(arrowDiv);
 
+// Animation
+const arrowImage = new Image();
+arrowImage.src = 'arrowSprites.png';
+
+const staggerFrames = 15; // The bigger the number, the slower the animation
+const totalFrames = spriteAnimations['rightArrow'].loc.length;
+let gameFrame = 0;
+let position = Math.floor(gameFrame/staggerFrames);
+
+arrowImage.onload = () => {
+    function animate() {
+        ctx.clearRect(0, 0, arrowDiv.width, arrowDiv.height); // Clear canvas
+        // const position = Math.floor(gameFrame / staggerFrames) % totalFrames; // Loop frames
+        // const frameY = spriteAnimations['rightArrow'].loc[position].y;
+
+        if(position < totalFrames) {
+        frameY = spriteAnimations['rightArrow'].loc[position].y;
+        ctx.drawImage(
+            arrowImage,
+            0, frameY, spriteWidth, spriteHeight, // Source rectangle
+            0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+        );
+        gameFrame++;
+        requestAnimationFrame(animate); // Continue animation
+    } else {
+        frameY = spriteAnimations['rightArrow'].loc[5].y;
+        ctx.drawImage(
+            arrowImage,
+            0, frameY, spriteWidth, spriteHeight, // Source rectangle
+            0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+        );
+        }
+    }
+    animate(); // Start animation
+}
+}
 
  if (hundreds > 0) { 
     for (let i =1; i<=hundreds; i++) {
@@ -111,15 +176,3 @@ function createAndAppendDivs(width, increment) {
  }
 }
 window.fillInNumberLine = fillInNumberLine;
-
-function colorArrows() {
-    const arrows = document.querySelectorAll(".arrowDiv");
-    
-    arrows.forEach((arrow, index) => {
-        setTimeout(() => {
-            arrow.classList.add("display");
-        }, index * 500);
-    });
-}
-
-window.colorArrows= colorArrows;
