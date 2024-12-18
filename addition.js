@@ -96,35 +96,21 @@ animationStates.forEach((state, index) => {
     spriteAnimations[state.name] = frames;
 });
 
-function createAndAppendDivs(width, increment) {
-
-        //arrow
-        const arrowDiv = document.createElement("canvas");
-        const ctx = arrowDiv.getContext("2d");
-        arrowDiv.classList.add("arrowDiv");
-        //set div widths
-        arrowDiv.width = width;
-        //height needs to match the width 190/1.46=130 -- keeps ratio the same
-        arrowDiv.height = (width/1.46);
-        arrowDiv.style.width = `${width}px`; // Same as the internal width
-        arrowDiv.style.height = `${width / 1.46}px`; // Matches the proportional heightctx.lineWidth = 5; // Border width
-
-        //counting lines and numbers
-        const countingContainer = document.createElement("div");
-        countingContainer.classList.add("countingContainer");
-        countingContainer.style.width= width + "px";
-        const countingLine = document.createElement("div");
-        countingLine.classList.add("verticalLine");
-        const countNumber = document.createElement("div");
-        countNumber.classList.add("countDisplay");
-        countNumber.innerHTML= total+=increment;
-
-        countingContainer.appendChild(countingLine);
-        countingContainer.appendChild(countNumber);  
-        horizontalLine.appendChild(countingContainer);
-        arrowContainer.appendChild(arrowDiv);
-
-// Animation
+function createArrows(width) {
+    //arrow
+    const arrowDiv = document.createElement("canvas");
+    const ctx = arrowDiv.getContext("2d");
+    arrowDiv.classList.add("arrowDiv");
+    //set div widths
+    arrowDiv.width = width;
+    //height needs to match the width 190/1.46=130 -- keeps ratio the same
+    arrowDiv.height = (width/1.46);
+    arrowDiv.style.width = `${width}px`; // Same as the internal width
+    arrowDiv.style.height = `${width / 1.46}px`; // Matches the proportional heightctx.lineWidth = 5; // Border width
+    
+    arrowContainer.appendChild(arrowDiv);
+    
+    // Animation
 const arrowImage = new Image();
 arrowImage.src = 'arrowSprites.png';
 
@@ -159,22 +145,44 @@ arrowImage.onload = () => {
     }
     animate(); // Start animation
 }
+
+}
+
+function createCountingDivs(width, increment) {
+
+        //counting lines and numbers
+        const countingContainer = document.createElement("div");
+        countingContainer.classList.add("countingContainer");
+        countingContainer.style.width= width + "px";
+        const countingLine = document.createElement("div");
+        countingLine.classList.add("verticalLine");
+        const countNumber = document.createElement("div");
+        countNumber.classList.add("countDisplay");
+        countNumber.innerHTML= total+=increment;
+
+        countingContainer.appendChild(countingLine);
+        countingContainer.appendChild(countNumber);  
+        horizontalLine.appendChild(countingContainer);
+
 }
 
 
  if (hundreds > 0) { 
     for (let i =1; i<=hundreds; i++) {
-       createAndAppendDivs(units*4, 100);
+       createCountingDivs(units*4, 100);
+       createArrows(units*4);
     }
  }
  if (tens > 0) {
     for (let i =1; i<=tens; i++) {
-        createAndAppendDivs(units*2, 10);
+        createCountingDivs(units*2, 10);
+        createArrows(units*2);
     }
  }
  if (ones > 0) {
     for (let i =1; i<=ones; i++) {
-        createAndAppendDivs(units, 1);
+        createCountingDivs(units, 1);
+        createArrows(units);
     }
  }
 }
