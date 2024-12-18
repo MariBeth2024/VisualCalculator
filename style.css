@@ -196,14 +196,17 @@ button:active {
 #additionContainer {
     display: flex;
     flex-direction: column;
+    justify-content: end;
     width: 100%;
+    height: 100%;
 }
 
 #numberLineDiv {
     display: flex;
     flex-direction: row-reverse;
-    align-items: center;
+    align-items: start;
     width: 100%;
+    height: 50%;
 }
 
 #horizontalLine {
@@ -240,7 +243,9 @@ button:active {
 
 #arrowContainer {
     display: flex;
-    margin-left: 25px;
+    align-items: end;
   }
 
-  
+#arrowDiv {
+    border: 2x solid black;
+}

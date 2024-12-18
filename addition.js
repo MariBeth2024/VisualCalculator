@@ -106,6 +106,8 @@ function createAndAppendDivs(width, increment) {
         arrowDiv.width = width;
         //height needs to match the width 190/1.46=130 -- keeps ratio the same
         arrowDiv.height = (width/1.46);
+        arrowDiv.style.width = `${width}px`; // Same as the internal width
+        arrowDiv.style.height = `${width / 1.46}px`; // Matches the proportional heightctx.lineWidth = 5; // Border width
 
         //counting lines and numbers
         const countingContainer = document.createElement("div");
@@ -142,7 +144,7 @@ arrowImage.onload = () => {
         ctx.drawImage(
             arrowImage,
             0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            0, 0, arrowDiv.width + 20, arrowDiv.height + 20 // Destination rectangle
+            0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
         );
         gameFrame++;
         requestAnimationFrame(animate); // Continue animation
@@ -151,7 +153,7 @@ arrowImage.onload = () => {
         ctx.drawImage(
             arrowImage,
             0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            0, 0, arrowDiv.width + 20, arrowDiv.height + 20 // Destination rectangle
+            0, 0, arrowDiv.width, arrowDiv.height// Destination rectangle
         );
         }
     }
