@@ -129,20 +129,20 @@ arrowImage.src = 'arrowSprites.png';
 const staggerFrames = 15; // The bigger the number, the slower the animation
 const totalFrames = spriteAnimations['rightArrow'].loc.length;
 let gameFrame = 0;
-let position = Math.floor(gameFrame/staggerFrames);
+let frameY;
 
 arrowImage.onload = () => {
     function animate() {
         ctx.clearRect(0, 0, arrowDiv.width, arrowDiv.height); // Clear canvas
+        let position = Math.floor(gameFrame/staggerFrames);
         // const position = Math.floor(gameFrame / staggerFrames) % totalFrames; // Loop frames
         // const frameY = spriteAnimations['rightArrow'].loc[position].y;
-
         if(position < totalFrames) {
         frameY = spriteAnimations['rightArrow'].loc[position].y;
         ctx.drawImage(
             arrowImage,
             0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+            0, 0, arrowDiv.width + 20, arrowDiv.height + 20 // Destination rectangle
         );
         gameFrame++;
         requestAnimationFrame(animate); // Continue animation
@@ -151,13 +151,14 @@ arrowImage.onload = () => {
         ctx.drawImage(
             arrowImage,
             0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+            0, 0, arrowDiv.width + 20, arrowDiv.height + 20 // Destination rectangle
         );
         }
     }
     animate(); // Start animation
 }
 }
+
 
  if (hundreds > 0) { 
     for (let i =1; i<=hundreds; i++) {
