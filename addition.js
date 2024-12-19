@@ -45,7 +45,6 @@ let hundreds;
 let tens;
 let ones;
 const horizontalLine = document.getElementById("horizontalLine");
-const arrowContainer = document.getElementById("arrowContainer");
 let total = parseInt(numA);
 
 const numBArray = numB.split("")
@@ -96,56 +95,116 @@ animationStates.forEach((state, index) => {
     spriteAnimations[state.name] = frames;
 });
 
-function createArrows(width) {
-    //arrow
-    const arrowDiv = document.createElement("canvas");
-    const ctx = arrowDiv.getContext("2d");
-    arrowDiv.classList.add("arrowDiv");
-    //set div widths
-    arrowDiv.width = width;
-    //height needs to match the width 190/1.46=130 -- keeps ratio the same
-    arrowDiv.height = (width/1.46);
-    arrowDiv.style.width = `${width}px`; // Same as the internal width
-    arrowDiv.style.height = `${width / 1.46}px`; // Matches the proportional heightctx.lineWidth = 5; // Border width
+// function createArrows(width) {
+//     //arrow
+//     const arrowDiv = document.createElement("canvas");
+//     const ctx = arrowDiv.getContext("2d");
+//     arrowDiv.classList.add("arrowDiv");
+//     //set div widths
+//     arrowDiv.width = width;
+//     //height needs to match the width 190/1.46=130 -- keeps ratio the same
+//     arrowDiv.height = (width/1.46);
+//     arrowDiv.style.width = `${width}px`; // Same as the internal width
+//     arrowDiv.style.height = `${width / 1.46}px`; // Matches the proportional heightctx.lineWidth = 5; // Border width
     
-    arrowContainer.appendChild(arrowDiv);
+//     arrowContainer.appendChild(arrowDiv);
     
-    // Animation
-const arrowImage = new Image();
-arrowImage.src = 'arrowSprites.png';
+//     // Animation
+// const arrowImage = new Image();
+// arrowImage.src = 'arrowSprites.png';
 
-const staggerFrames = 15; // The bigger the number, the slower the animation
-const totalFrames = spriteAnimations['rightArrow'].loc.length;
-let gameFrame = 0;
-let frameY;
+// const staggerFrames = 15; // The bigger the number, the slower the animation
+// const totalFrames = spriteAnimations['rightArrow'].loc.length;
+// let gameFrame = 0;
+// let frameY;
 
-arrowImage.onload = () => {
-    function animate() {
-        ctx.clearRect(0, 0, arrowDiv.width, arrowDiv.height); // Clear canvas
-        let position = Math.floor(gameFrame/staggerFrames);
-        // const position = Math.floor(gameFrame / staggerFrames) % totalFrames; // Loop frames
-        // const frameY = spriteAnimations['rightArrow'].loc[position].y;
-        if(position < totalFrames) {
-        frameY = spriteAnimations['rightArrow'].loc[position].y;
-        ctx.drawImage(
-            arrowImage,
-            0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
-        );
-        gameFrame++;
-        requestAnimationFrame(animate); // Continue animation
-    } else {
-        frameY = spriteAnimations['rightArrow'].loc[5].y;
-        ctx.drawImage(
-            arrowImage,
-            0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            0, 0, arrowDiv.width, arrowDiv.height// Destination rectangle
-        );
-        }
+// arrowImage.onload = () => {
+//     function animate() {
+//         ctx.clearRect(0, 0, arrowDiv.width, arrowDiv.height); // Clear canvas
+//         let position = Math.floor(gameFrame/staggerFrames);
+//         // const position = Math.floor(gameFrame / staggerFrames) % totalFrames; // Loop frames
+//         // const frameY = spriteAnimations['rightArrow'].loc[position].y;
+//         if(position < totalFrames) {
+//         frameY = spriteAnimations['rightArrow'].loc[position].y;
+//         ctx.drawImage(
+//             arrowImage,
+//             0, frameY, spriteWidth, spriteHeight, // Source rectangle
+//             0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+//         );
+//         gameFrame++;
+//         requestAnimationFrame(animate); // Continue animation
+//     } else {
+//         frameY = spriteAnimations['rightArrow'].loc[5].y;
+//         ctx.drawImage(
+//             arrowImage,
+//             0, frameY, spriteWidth, spriteHeight, // Source rectangle
+//             0, 0, arrowDiv.width, arrowDiv.height// Destination rectangle
+//         );
+//         }
+//     }
+//     animate(); // Start animation
+// }
+
+// }
+
+function createArrowsSequentially(numArrows, width) {
+const arrowContainer = document.getElementById("arrowContainer");
+
+    function appendArrow(index) {
+        if (index >= numArrows) return; // Stop if we've created all arrows
+
+        // Arrow setup
+        const arrowDiv = document.createElement("canvas");
+        const ctx = arrowDiv.getContext("2d");
+        arrowDiv.classList.add("arrowDiv");
+        arrowDiv.width = width;
+        arrowDiv.height = width / 1.46;
+        arrowDiv.style.width = `${width}px`;
+        arrowDiv.style.height = `${width / 1.46}px`;
+        arrowContainer.appendChild(arrowDiv);
+
+        // Animation setup
+        const arrowImage = new Image();
+        arrowImage.src = 'arrowSprites.png';
+
+        const staggerFrames = 15; // The bigger the number, the slower the animation
+        const totalFrames = spriteAnimations['rightArrow'].loc.length;
+        let gameFrame = 0;
+        let frameY;
+
+        arrowImage.onload = () => {
+            function animate() {
+                ctx.clearRect(0, 0, arrowDiv.width, arrowDiv.height); // Clear canvas
+                const position = Math.floor(gameFrame / staggerFrames);
+                
+                if (position < totalFrames) {
+                    frameY = spriteAnimations['rightArrow'].loc[position].y;
+                    ctx.drawImage(
+                        arrowImage,
+                        0, frameY, spriteWidth, spriteHeight, // Source rectangle
+                        0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+                    );
+                    gameFrame++;
+                    requestAnimationFrame(animate); // Continue animation
+                } else {
+                    // Display the final frame
+                    frameY = spriteAnimations['rightArrow'].loc[totalFrames - 1].y;
+                    ctx.drawImage(
+                        arrowImage,
+                        0, frameY, spriteWidth, spriteHeight, // Source rectangle
+                        0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+                    );
+                }
+            }
+            animate(); // Start the animation
+        };
+
+        // Call the next arrow after a delay
+        setTimeout(() => appendArrow(index + 1), 1000); // Delay of 1 second
     }
-    animate(); // Start animation
-}
 
+    // Start with the first arrow
+    appendArrow(0);
 }
 
 function createCountingDivs(width, increment) {
@@ -170,20 +229,21 @@ function createCountingDivs(width, increment) {
  if (hundreds > 0) { 
     for (let i =1; i<=hundreds; i++) {
        createCountingDivs(units*4, 100);
-       createArrows(units*4);
     }
+    createArrowsSequentially(hundreds, units*4)
+
  }
  if (tens > 0) {
     for (let i =1; i<=tens; i++) {
         createCountingDivs(units*2, 10);
-        createArrows(units*2);
     }
+    setTimeout(() => createArrowsSequentially(tens, units*2), 1000*hundreds);
  }
  if (ones > 0) {
     for (let i =1; i<=ones; i++) {
         createCountingDivs(units, 1);
-        createArrows(units);
     }
+    setTimeout(() => createArrowsSequentially(ones, units), (1000*(hundreds + tens)));
  }
 }
 window.fillInNumberLine = fillInNumberLine;
