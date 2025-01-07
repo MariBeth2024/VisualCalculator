@@ -43,7 +43,6 @@ function doOperation(firstNum, secondNum, operation) {
 }
 
 function readNum(sentNum) {
-    console.log(numA);
     if(onNumA === true) {
         numA += sentNum;
         currentDisplay.innerHTML = numA;
@@ -175,40 +174,3 @@ function createMultDots(numB) {
     // Start the recursive function with the first circle
     appendDotGroup(0);
 }
-
-    
-    
-//     else if(sentVal === '.' && onNumA === true) {
-//         numA += sentVal;
-//         dec.disabled = true;
-//         currentDisplay.innerHTML = numA;
-//     } else if(sentVal === '.' && onNumA === false) {
-//         numB += sentVal;
-//         dec.disabled = true;
-//         currentDisplay.innerHTML = numA + operator + numB;
-//     } else if(sentVal === '+' || sentVal === '-' || sentVal === '*' || sentVal === '/') {
-//         operator = sentVal;
-//         onNumA = false;
-//         dec.disabled = false;
-//         currentDisplay.innerHTML = numA + operator;
-//     } else if(sentVal === '=') {
-//         let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
-//         currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-//         numA = answer;
-//         dec.disabled = false;
-//     } else if(sentVal === 'b' && onNumA === true) {
-//         numA = numA.slice(0, -1);
-//         currentDisplay.innerHTML = numA;
-//     } else if(sentVal === 'b' && onNumA === false) {
-//         numB = numB.slice(0, -1);
-//         currentDisplay.innerHTML = numA + operator + numB;
-//     } else if(sentVal === 'c') {
-//         numA = "";
-//         numB = "";
-//         operator = "";
-//         currentDisplay.innerHTML = "";
-//         dec.disabled = false;
-//         onNumA = true;
-//     }
-    
-// }

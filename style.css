@@ -213,15 +213,16 @@ button:active {
     background-color: black;
     box-sizing: content-box;
     height: 5px;
-    width: 95%;
+    width: 99%;
     display: flex;
     align-items:center;
+    padding-right: 10px;
 }
 
 .startVerticalContainer {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: center;
     width: 46px;
     margin-top: 30px;
 }
@@ -235,7 +236,7 @@ button:active {
 
 .verticalLine {
     background-color: black;
-    height: 40px;
+    height: 30px;
     width: 5px;
 }
 
@@ -244,6 +245,7 @@ button:active {
 #arrowContainer {
     display: flex;
     align-items: end;
+    margin-left: 23px;
   }
 
 #arrowDiv {

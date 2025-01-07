@@ -1,5 +1,3 @@
-
-
 //run when operation is pressed
 function createAddLine() {
     const pictureVisualDiv = document.getElementById("pictureVisual"); 
@@ -28,7 +26,7 @@ function createAddLine() {
         startNumber.innerHTML= numA;
         startVerticalContainer.appendChild(startVerticalLine);
         startVerticalContainer.appendChild(startNumber);
-        numberLineDiv.appendChild(startVerticalContainer);
+        horizontalLine.appendChild(startVerticalContainer);
         
     //highlight num on number line
 }
@@ -63,8 +61,7 @@ const numBArray = numB.split("")
   ones = parseInt(numBArray[0]);
  }
  //calculate numberline 
- console.log(horizontalLine.offsetWidth);
- let units = (horizontalLine.offsetWidth)/((hundreds*4)+(tens*2)+ones);
+ let units = (horizontalLine.offsetWidth-28)/((hundreds*4)+(tens*2)+ones);
 
 //arrow animation setup
 const spriteWidth = 190;
