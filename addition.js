@@ -10,7 +10,7 @@ function createAddLine() {
         const numberLineDiv = document.createElement("div");
         numberLineDiv.id = "numberLineDiv";        
         const horizontalLine = document.createElement("div");
-        horizontalLine.id= "horizontalLine";
+        horizontalLine.classList.add("horizontalLine");
         numberLineDiv.appendChild(horizontalLine);
         additionContainer.appendChild(arrowContainer);
         additionContainer.appendChild(numberLineDiv);

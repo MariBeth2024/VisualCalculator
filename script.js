@@ -70,6 +70,9 @@ function readOper(sentOper) {
         if(operator === "+") {
             createAddLine();
         }
+        if(operator === "-") {
+            createSubtractionLine();
+        }
     }
 }
 
