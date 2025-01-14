@@ -68,6 +68,8 @@ function readOper(sentOper) {
             createMultCircles();
         } else if(operator === "/") {
             createStartDivDots();
+        } else if(operator === "+") {
+            createAddLine(numA);
         }
     }
 }
@@ -77,8 +79,9 @@ function readEnter() {
 
     if(typeof(answer) === "number") {
         if(operator === "+") {
+            animateAddition(numA, numB);
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)
-            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)           
         } else if(operator === "-") {
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)
@@ -125,7 +128,7 @@ function readClear() {
     operator = "";
     currentDisplay.innerHTML = "";
     equationVisual.innerHTML = "";
-    pictureVisual.innerHTML = "";
+    pictureVisual.innerHTML = '<canvas id="canvas"></canvas>';
     onNumA = true;
 }
 
