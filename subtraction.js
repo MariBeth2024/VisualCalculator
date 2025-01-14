@@ -57,10 +57,10 @@ function fillInSubtractionNumberLine(numB) {
       ones = parseInt(numBArray[0]);
      }
      //calculate numberline 
-     let units = (horizontalLine.offsetWidth-28)/((hundreds*4)+(tens*2)+ones);
+     let units = (horizontalLine.offsetWidth-45)/((hundreds*4)+(tens*2)+ones);
     
     //arrow animation setup
-    const spriteWidth = 190;
+    const spriteWidth = 172;
     const spriteHeight = 130;
     const spriteAnimations = [];
     const animationStates = [
@@ -88,7 +88,7 @@ function fillInSubtractionNumberLine(numB) {
         spriteAnimations[state.name] = frames;
     });
     
-    function createArrows(width) {
+    function createArrows(width, increment) {
         //arrow
         const arrowDiv = document.createElement("canvas");
         const ctx = arrowDiv.getContext("2d");
@@ -97,8 +97,8 @@ function fillInSubtractionNumberLine(numB) {
         arrowDiv.width = width;
         //height needs to match the width 190/1.46=130 -- keeps ratio the same
         arrowDiv.height = (width/1.46);
-        arrowDiv.style.width = `${width}px`; // Same as the internal width
-        arrowDiv.style.height = `${width / 1.46}px`; // Matches the proportional heightctx.lineWidth = 5; // Border width
+        arrowDiv.style.width = `${width}px`; 
+        arrowDiv.style.height = `${width / 1.46}px`; 
         
         arrowContainer.appendChild(arrowDiv);
         
@@ -122,17 +122,22 @@ function fillInSubtractionNumberLine(numB) {
             ctx.drawImage(
                 arrowImage,
                 0, frameY, spriteWidth, spriteHeight, // Source rectangle
-                0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+                -8, 0, arrowDiv.width-1, arrowDiv.height // Destination rectangle
             );
             gameFrame++;
+            ctx.font= "bold 25px Courier New"
+            ctx.fillText(`-${increment}`, arrowDiv.width/2.4, 20);
             requestAnimationFrame(animate); // Continue animation
         } else {
             frameY = spriteAnimations['leftArrow'].loc[5].y;
             ctx.drawImage(
                 arrowImage,
                 0, frameY, spriteWidth, spriteHeight, // Source rectangle
-                0, 0, arrowDiv.width, arrowDiv.height// Destination rectangle
+                -8, 0, arrowDiv.width-1, arrowDiv.height// Destination rectangle
             );
+            ctx.font= "bold 25px Courier New"
+            ctx.fillText(`-${increment}`, arrowDiv.width/2.4, 20);
+
             }
         }
         animate(); // Start animation
@@ -163,7 +168,7 @@ function fillInSubtractionNumberLine(numB) {
             createCountingDivs(units * 4, 100);
     
             // Delay each arrow creation by 1 second per iteration
-            setTimeout(() => createArrows(units * 4), i * 1200);
+            setTimeout(() => createArrows(units * 4, 100), i * 1200);
         }
     }
     
@@ -172,7 +177,7 @@ function fillInSubtractionNumberLine(numB) {
             createCountingDivs(units * 2, 10);
     
             // Delay by total time spent on hundreds plus 1 second per iteration
-            setTimeout(() => createArrows(units * 2), (1200 * hundreds) + (i * 1200));
+            setTimeout(() => createArrows(units * 2, 10), (1200 * hundreds) + (i * 1200));
         }
     }
     
@@ -181,7 +186,7 @@ function fillInSubtractionNumberLine(numB) {
             createCountingDivs(units, 1);
     
             // Delay by total time spent on hundreds and tens plus 1 second per iteration
-            setTimeout(() => createArrows(units), (1200 * (hundreds + tens)) + (i * 1200));
+            setTimeout(() => createArrows(units, 1), (1200 * (hundreds + tens)) + (i * 1200));
         }
     }
     }
