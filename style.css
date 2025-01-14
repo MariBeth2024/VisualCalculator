@@ -209,7 +209,7 @@ button:active {
     height: 50%;
 }
 
-.horizontalLine {
+#horizontalLine {
     background-color: black;
     box-sizing: content-box;
     height: 5px;
@@ -222,7 +222,7 @@ button:active {
 .startVerticalContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     width: 46px;
     margin-top: 30px;
 }
@@ -266,7 +266,7 @@ button:active {
     margin-top: 30px;
 }
 
-.subHorizontalLine {
+#subHorizontalLine {
     background-color: black;
     box-sizing: content-box;
     height: 5px;
@@ -277,21 +277,30 @@ button:active {
     padding-right: 10px;
 }
 
+.subCountingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 30px;
+}
 
 /* Arrow CSS */
 
 #arrowContainer {
     display: flex;
     align-items: end;
-    margin-left: 23px;
+    margin-left: 39px;
+    margin-bottom: 13px;
   }
 
 #subArrowContainer {
     display: flex;
+    flex-direction: row-reverse;
     align-items: end;
-    margin-left: 23px;
+    margin-right: 23px;
     }
 
 #arrowDiv {
     border: 2x solid black;
 }
+

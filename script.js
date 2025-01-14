@@ -81,11 +81,16 @@ function readEnter() {
     if(typeof(answer) === "number") {
         if(operator === "*"){
             createMultDots(numB);
-        setTimeout(() => {currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
-        setTimeout(() => {equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7)}, (500*numA));
+        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         }
         if (operator === "+") {
             fillInNumberLine(numB);
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        }
+        if (operator === "-") {
+            fillInSubtractionNumberLine(numB);
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         }
@@ -95,13 +100,13 @@ function readEnter() {
         numA = "";
     }  
     //reset values in function and run with setTimeout so dont mess up display
-    setTimeout((resetValues), (500*(numA+1)));
     function resetValues() {
-        numA= answer;
+        numA= "";
         onNumA = true;
         numB = "";
         operator = "";
     }
+    resetValues();
 }
 
 function readClear() {

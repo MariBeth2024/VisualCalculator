@@ -10,7 +10,7 @@ function createAddLine() {
         const numberLineDiv = document.createElement("div");
         numberLineDiv.id = "numberLineDiv";        
         const horizontalLine = document.createElement("div");
-        horizontalLine.classList.add("horizontalLine");
+        horizontalLine.id = "horizontalLine";
         numberLineDiv.appendChild(horizontalLine);
         additionContainer.appendChild(arrowContainer);
         additionContainer.appendChild(numberLineDiv);
@@ -43,6 +43,7 @@ let hundreds;
 let tens;
 let ones;
 const horizontalLine = document.getElementById("horizontalLine");
+const arrowContainer = document.getElementById("arrowContainer");
 let total = parseInt(numA);
 
 const numBArray = numB.split("")
@@ -61,10 +62,10 @@ const numBArray = numB.split("")
   ones = parseInt(numBArray[0]);
  }
  //calculate numberline 
- let units = (horizontalLine.offsetWidth-28)/((hundreds*4)+(tens*2)+ones);
+ let units = (horizontalLine.offsetWidth-45)/((hundreds*4)+(tens*2)+ones);
 
 //arrow animation setup
-const spriteWidth = 190;
+const spriteWidth = 172;
 const spriteHeight = 130;
 const spriteAnimations = [];
 const animationStates = [
@@ -101,8 +102,8 @@ function createArrows(width) {
     arrowDiv.width = width;
     //height needs to match the width 190/1.46=130 -- keeps ratio the same
     arrowDiv.height = (width/1.46);
-    arrowDiv.style.width = `${width}px`; // Same as the internal width
-    arrowDiv.style.height = `${width / 1.46}px`; // Matches the proportional heightctx.lineWidth = 5; // Border width
+    arrowDiv.style.width = `${width}px`;
+    arrowDiv.style.height = `${width / 1.46}px`;
     
     arrowContainer.appendChild(arrowDiv);
     
@@ -126,7 +127,7 @@ arrowImage.onload = () => {
         ctx.drawImage(
             arrowImage,
             0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            0, 0, arrowDiv.width, arrowDiv.height // Destination rectangle
+            -8, 0, arrowDiv.width-1, arrowDiv.height // Destination rectangle
         );
         gameFrame++;
         requestAnimationFrame(animate); // Continue animation
@@ -135,7 +136,7 @@ arrowImage.onload = () => {
         ctx.drawImage(
             arrowImage,
             0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            0, 0, arrowDiv.width, arrowDiv.height// Destination rectangle
+            -8, 0, arrowDiv.width-1, arrowDiv.height// Destination rectangle
         );
         }
     }
