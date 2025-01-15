@@ -90,16 +90,19 @@ function fillInSubtractionNumberLine(numB) {
     
     function createArrows(width, increment) {
         //arrow
-        const arrowDiv = document.createElement("canvas");
-        const ctx = arrowDiv.getContext("2d");
+        const arrowDiv = document.createElement("div");
         arrowDiv.classList.add("arrowDiv");
+        const arrowCanvas = document.createElement("canvas");
+        const ctx = arrowCanvas.getContext("2d");
+        arrowCanvas.classList.add("arrowCanvas");
         //set div widths
-        arrowDiv.width = width;
+        arrowCanvas.width = width;
         //height needs to match the width 190/1.46=130 -- keeps ratio the same
-        arrowDiv.height = (width/1.46);
-        arrowDiv.style.width = `${width}px`; 
-        arrowDiv.style.height = `${width / 1.46}px`; 
+        arrowCanvas.height = (width/1.46);
+        arrowCanvas.style.width = `${width}px`;
+        arrowCanvas.style.height = `${width / 1.46}px`;
         
+        arrowDiv.appendChild(arrowCanvas);
         arrowContainer.appendChild(arrowDiv);
         
         // Animation
@@ -113,16 +116,43 @@ function fillInSubtractionNumberLine(numB) {
     
     arrowImage.onload = () => {
         function animate() {
-            ctx.clearRect(0, 0, arrowDiv.width, arrowDiv.height); // Clear canvas
+            ctx.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height); // Clear canvas
             let position = Math.floor(gameFrame/staggerFrames);
             // const position = Math.floor(gameFrame / staggerFrames) % totalFrames; // Loop frames
             // const frameY = spriteAnimations['rightArrow'].loc[position].y;
             if(position < totalFrames) {
+                if (gameFrame === 0) {
+                    const starContainer = document.createElement("div");
+                    starContainer.classList.add("starContainer");
+                    starContainer.style.width= `${width/2}px`;
+                    starContainer.style.height = `${width/2}px`;
+    
+                    const star = document.createElement("div");
+                    star.classList.add("fivePointedStar");
+                    star.style.fontSize = `${width/4}px`;
+    
+                    const starNumber = document.createElement("div");
+                    starNumber.classList.add("starNumber");
+                    starNumber.innerHTML = `-${increment}`; // Add your number here
+    
+                    // Append star and number to the container
+                    starContainer.appendChild(star);
+                    starContainer.appendChild(starNumber);
+    
+                    // Append the container to the arrow div
+                    arrowDiv.appendChild(starContainer);
+                }
+                // Remove the star when the animation is done
+                const star = arrowDiv.querySelector(".fivePointedStar");
+                if (gameFrame > 60 && star) {
+                    star.remove();
+                }
+
             frameY = spriteAnimations['leftArrow'].loc[position].y;
             ctx.drawImage(
                 arrowImage,
                 0, frameY, spriteWidth, spriteHeight, // Source rectangle
-                -8, 0, arrowDiv.width-1, arrowDiv.height // Destination rectangle
+                -8, 0, arrowCanvas.width-1, arrowCanvas.height // Destination rectangle
             );
             gameFrame++;
             ctx.font= "bold 25px Courier New"
@@ -135,9 +165,6 @@ function fillInSubtractionNumberLine(numB) {
                 0, frameY, spriteWidth, spriteHeight, // Source rectangle
                 -8, 0, arrowDiv.width-1, arrowDiv.height// Destination rectangle
             );
-            ctx.font= "bold 25px Courier New"
-            ctx.fillText(`-${increment}`, arrowDiv.width/2.4, 20);
-
             }
         }
         animate(); // Start animation
