@@ -68,10 +68,10 @@ function readOper(sentOper) {
         if(operator === "*") {
         createMultCircles();
         }
-        if(operator === "+") {
+        if(operator === "+" && numA < 1000) {
             createAddLine();
         }
-        if(operator === "-") {
+        if(operator === "-" && numA < 1000) {
             createSubtractionLine();
         }
     }
@@ -86,12 +86,16 @@ function readEnter() {
         equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         }
         if (operator === "+") {
+            if (numA < 1000 && numB < 1000) {
             fillInNumberLine(numB);
+            }
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         }
         if (operator === "-") {
+            if (numA < 1000 && numB < 1000) {
             fillInSubtractionNumberLine(numB);
+            }
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         }
