@@ -93,18 +93,21 @@ animationStates.forEach((state, index) => {
     spriteAnimations[state.name] = frames;
 });
 
-function createArrows(width) {
+function createArrows(width, increment) {
     //arrow
-    const arrowDiv = document.createElement("canvas");
-    const ctx = arrowDiv.getContext("2d");
+    const arrowDiv = document.createElement("div");
     arrowDiv.classList.add("arrowDiv");
+    const arrowCanvas = document.createElement("canvas");
+    const ctx = arrowCanvas.getContext("2d");
+    arrowCanvas.classList.add("arrowCanvas");
     //set div widths
-    arrowDiv.width = width;
+    arrowCanvas.width = width;
     //height needs to match the width 190/1.46=130 -- keeps ratio the same
-    arrowDiv.height = (width/1.46);
-    arrowDiv.style.width = `${width}px`;
-    arrowDiv.style.height = `${width / 1.46}px`;
+    arrowCanvas.height = (width/1.46);
+    arrowCanvas.style.width = `${width}px`;
+    arrowCanvas.style.height = `${width / 1.46}px`;
     
+    arrowDiv.appendChild(arrowCanvas);
     arrowContainer.appendChild(arrowDiv);
     
     // Animation
@@ -118,16 +121,43 @@ let frameY;
 
 arrowImage.onload = () => {
     function animate() {
-        ctx.clearRect(0, 0, arrowDiv.width, arrowDiv.height); // Clear canvas
+        ctx.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height); // Clear canvas
         let position = Math.floor(gameFrame/staggerFrames);
         // const position = Math.floor(gameFrame / staggerFrames) % totalFrames; // Loop frames
         // const frameY = spriteAnimations['rightArrow'].loc[position].y;
         if(position < totalFrames) {
+            if (gameFrame === 0) {
+                const starContainer = document.createElement("div");
+                starContainer.classList.add("starContainer");
+                starContainer.style.width= `${width/2}px`;
+                starContainer.style.height = `${width/2}px`;
+
+                const star = document.createElement("div");
+                star.classList.add("fivePointedStar");
+                star.style.fontSize = `${width/4}px`;
+
+                const starNumber = document.createElement("div");
+                starNumber.classList.add("starNumber");
+                starNumber.innerHTML = `+${increment}`; // Add your number here
+
+                // Append star and number to the container
+                starContainer.appendChild(star);
+                starContainer.appendChild(starNumber);
+
+                // Append the container to the arrow div
+                arrowDiv.appendChild(starContainer);
+            }
+            // Remove the star when the animation is done
+            const star = arrowDiv.querySelector(".fivePointedStar");
+            if (gameFrame > 60 && star) {
+                star.remove();
+            }
+
         frameY = spriteAnimations['rightArrow'].loc[position].y;
         ctx.drawImage(
             arrowImage,
             0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            -8, 0, arrowDiv.width-1, arrowDiv.height // Destination rectangle
+            -8, 0, arrowCanvas.width-1, arrowCanvas.height // Destination rectangle
         );
         gameFrame++;
         requestAnimationFrame(animate); // Continue animation
@@ -136,7 +166,7 @@ arrowImage.onload = () => {
         ctx.drawImage(
             arrowImage,
             0, frameY, spriteWidth, spriteHeight, // Source rectangle
-            -8, 0, arrowDiv.width-1, arrowDiv.height// Destination rectangle
+            -8, 0, arrowCanvas.width-1, arrowCanvas.height// Destination rectangle
         );
         }
     }
@@ -168,7 +198,7 @@ if (hundreds > 0) {
         createCountingDivs(units * 4, 100);
 
         // Delay each arrow creation by 1 second per iteration
-        setTimeout(() => createArrows(units * 4), i * 1200);
+        setTimeout(() => createArrows(units * 4, 100), i * 1200);
     }
 }
 
@@ -177,7 +207,7 @@ if (tens > 0) {
         createCountingDivs(units * 2, 10);
 
         // Delay by total time spent on hundreds plus 1 second per iteration
-        setTimeout(() => createArrows(units * 2), (1200 * hundreds) + (i * 1200));
+        setTimeout(() => createArrows(units * 2, 10), (1200 * hundreds) + (i * 1200));
     }
 }
 
@@ -186,7 +216,7 @@ if (ones > 0) {
         createCountingDivs(units, 1);
 
         // Delay by total time spent on hundreds and tens plus 1 second per iteration
-        setTimeout(() => createArrows(units), (1200 * (hundreds + tens)) + (i * 1200));
+        setTimeout(() => createArrows(units, 1), (1200 * (hundreds + tens)) + (i * 1200));
     }
 }
 }

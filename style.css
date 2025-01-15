@@ -300,3 +300,71 @@ button:active {
     margin-right: 39px;
     margin-bottom: 13px;
     }
+
+.arrowDiv {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+    /* star */
+    .starContainer {
+        position: relative;
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+    }
+    .fivePointedStar {
+        --star-color: #F0C998;
+        margin:1em auto;
+        position: absolute;
+        display: block;
+        width: 0px;
+        height: 0px;
+        border-right: 1em solid transparent;
+        border-bottom: 0.7em solid var(--star-color);
+        border-left: 1em solid transparent;
+        transform: translate(-50%, -50%) rotate(35deg);
+        top: 10%;
+        left: 50%; /* Center horizontally */
+        z-index: 1; /* Ensure the star is behind the number */
+       }
+       .fivePointedStar:before {
+        border-bottom: 0.8em solid var(--star-color);
+        border-left: 0.3em solid transparent;
+        border-right: 0.3em solid transparent;
+        position: absolute;
+        height: 0;
+        width: 0;
+        top: -0.45em;
+        left: -0.65em;
+        display: block;
+        content:"";
+        transform: rotate(-35deg);
+        z-index: 1; /* Ensure the star is behind the number */
+       }
+       .fivePointedStar:after {
+        position: absolute;
+        display: block;
+        top: 0.03em;
+        left: -1.05em;
+        width: 0;
+        height: 0;
+        border-right: 1em solid transparent;
+        border-bottom: 0.7em solid var(--star-color);
+        border-left: 1em solid transparent;
+        transform: rotate(-70deg);
+        content:"";
+        z-index: 1; /* Ensure the star is behind the number */
+       }
+       
+       .starNumber {
+        position: absolute;
+        top: 55%;
+        left: 48%;
+        color: black; 
+        transform: translate(-50%, -50%); 
+        font-size: 1em;
+        font-weight: bold;
+        z-index: 2; /* Ensure the number is above the star */
+    }
