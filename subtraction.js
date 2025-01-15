@@ -96,11 +96,18 @@ function fillInSubtractionNumberLine(numB) {
         const ctx = arrowCanvas.getContext("2d");
         arrowCanvas.classList.add("arrowCanvas");
         //set div widths
-        arrowCanvas.width = width;
-        //height needs to match the width 190/1.46=130 -- keeps ratio the same
-        arrowCanvas.height = (width/1.46);
-        arrowCanvas.style.width = `${width}px`;
-        arrowCanvas.style.height = `${width / 1.46}px`;
+        if (width < 300) {
+            arrowCanvas.width = width;
+            //height needs to match the width 190/1.46=130 -- keeps ratio the same
+            arrowCanvas.height = (width/1.46);
+            arrowCanvas.style.width = `${width}px`;
+            arrowCanvas.style.height = `${width / 1.46}px`;
+        } else if (width >= 300){
+            arrowCanvas.width = 300;
+            arrowCanvas.height = 300 / 1.46;
+            arrowCanvas.style.width = `300px`;
+            arrowCanvas.style.height = `${300 / 1.46}px`;
+        }
         
         arrowDiv.appendChild(arrowCanvas);
         arrowContainer.appendChild(arrowDiv);
@@ -124,12 +131,12 @@ function fillInSubtractionNumberLine(numB) {
                 if (gameFrame === 0) {
                     const starContainer = document.createElement("div");
                     starContainer.classList.add("starContainer");
-                    starContainer.style.width= `${width/2}px`;
-                    starContainer.style.height = `${width/2}px`;
+                    starContainer.style.width= `${arrowCanvas.width/2}px`;
+                    starContainer.style.height = `${arrowCanvas.width/2}px`;
     
                     const star = document.createElement("div");
                     star.classList.add("fivePointedStar");
-                    star.style.fontSize = `${width/4}px`;
+                    star.style.fontSize = `${arrowCanvas.width/4}px`;
     
                     const starNumber = document.createElement("div");
                     starNumber.classList.add("starNumber");
@@ -177,13 +184,22 @@ function fillInSubtractionNumberLine(numB) {
             //counting lines and numbers
             const countingContainer = document.createElement("div");
             countingContainer.classList.add("subCountingContainer");
-            countingContainer.style.width= width + "px";
+            if (width < 300) {
+                countingContainer.style.width= `${width}px`;
+            } else if (width >= 300){
+                countingContainer.style.width = `300px`;
+            }
             const countingLine = document.createElement("div");
             countingLine.classList.add("verticalLine");
             const countNumber = document.createElement("div");
             countNumber.classList.add("countDisplay");
             countNumber.innerHTML= total-=increment;
-    
+            if (width <= 45) {
+                countNumber.style.fontSize= "15px";
+            }
+            if (width <= 30) {
+                countNumber.classList.add("stack");
+            }
             countingContainer.appendChild(countingLine);
             countingContainer.appendChild(countNumber);  
             horizontalLine.appendChild(countingContainer);

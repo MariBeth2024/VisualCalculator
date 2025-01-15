@@ -167,6 +167,11 @@ button:active {
     text-align: center;
 }
 
+.stack {
+    width: 0px;
+    word-break: break-all;
+}
+
 .dotGroup {
     display: flex;
     flex-direction: row;

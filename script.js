@@ -1,3 +1,4 @@
+
 let numA = "";
 let onNumA = true;
 let numB = "";
@@ -111,7 +112,6 @@ function readEnter() {
 
 function readClear() {
     numA = "";
-    console.log(numA);
     numB = "";
     operator = "";
     currentDisplay.innerHTML = "";
