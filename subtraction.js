@@ -99,18 +99,11 @@ function fillInSubtractionNumberLine(numB) {
         const ctx = arrowCanvas.getContext("2d");
         arrowCanvas.classList.add("arrowCanvas");
         //set div widths
-        // if (width < 300) {
             arrowCanvas.width = width;
             //height needs to match the width 190/1.46=130 -- keeps ratio the same
             arrowCanvas.height = (width/1.46);
             arrowCanvas.style.width = `${width}px`;
             arrowCanvas.style.height = `${width / 1.46}px`;
-        // } else if (width >= 300){
-        //     arrowCanvas.width = 300/divisor;
-        //     arrowCanvas.height = 300 / divisor / 1.46;
-        //     arrowCanvas.style.width = `${300/divisor}px`;
-        //     arrowCanvas.style.height = `${300 / divisor / 1.46}px`;
-        // }
         
         arrowDiv.appendChild(arrowCanvas);
         arrowContainer.appendChild(arrowDiv);
@@ -128,8 +121,7 @@ function fillInSubtractionNumberLine(numB) {
         function animate() {
             ctx.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height); // Clear canvas
             let position = Math.floor(gameFrame/staggerFrames);
-            // const position = Math.floor(gameFrame / staggerFrames) % totalFrames; // Loop frames
-            // const frameY = spriteAnimations['rightArrow'].loc[position].y;
+
             if(position < totalFrames) {
                 if (gameFrame === 0) {
                     const starContainer = document.createElement("div");
@@ -185,11 +177,7 @@ function fillInSubtractionNumberLine(numB) {
             //counting lines and numbers
             const countingContainer = document.createElement("div");
             countingContainer.classList.add("subCountingContainer");
-            // if (width < 300) {
-                countingContainer.style.width= `${width}px`;
-            // } else if (width >= 300){
-            //     countingContainer.style.width = `${300/ divisor}px`;
-            // }
+            countingContainer.style.width= `${width}px`;
             const countingLine = document.createElement("div");
             countingLine.classList.add("verticalLine");
             const countNumber = document.createElement("div");
