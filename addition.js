@@ -73,6 +73,8 @@ function createAddLine(numA) {
 function animateAddition(numA, numB) {
     const additionCanvas = document.getElementById('canvas')
     const ctx = additionCanvas.getContext('2d');
+    const canvasWidth = additionCanvas.width;
+    const canvasHeight = additionCanvas.height;
     
     let locationDash = 15;  //starting x px value of the initial dash on number line
     let locationNum = 11; //starting x px value of the initial number on number line
@@ -86,7 +88,8 @@ function animateAddition(numA, numB) {
     let ones = numB - hundreds - tens
     let units = 750 / ((hundreds*4/100)+(tens*2/10)+ones);
     
-    function addArrow(locationDash, currentNum, locationNum) {
+    function animateArrow(locationDash, currentNum, locationNum) {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.fillStyle = 'black';
         ctx.fillRect(locationDash, 294, 3, 15);
         ctx.fillText(currentNum, locationNum, 328);
@@ -98,7 +101,7 @@ function animateAddition(numA, numB) {
             frameY = spriteAnimations['rightArrow'].loc[position].y;
             ctx.drawImage(arrowImage, 0, frameY, spriteWidth, spriteHeight, -352 + locationDash , 238 - spriteHeight, 440, 301);
             gameFrame++;
-            // requestAnimationFrame(animate2);
+            requestAnimationFrame(animateArrow);
         } else {
             frameY = spriteAnimations['rightArrow'].loc[5].y;
             ctx.drawImage(arrowImage, 0, frameY, spriteWidth, spriteHeight, -352 + locationDash, 238 - spriteHeight, 440, 301);
@@ -107,7 +110,7 @@ function animateAddition(numA, numB) {
 
     function scheduleArrow(delay, locDash, currNum, locNum) {
         setTimeout(() => {
-            addArrow(locDash, currNum, locNum);
+            animateArrow(locDash, currNum, locNum);
         }, delay * 500);
     }
 
