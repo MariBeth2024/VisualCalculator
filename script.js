@@ -80,24 +80,46 @@ function readOper(sentOper) {
 function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
     if(typeof(answer) === "number") {
-        if(operator === "*"){
-            createMultDots(numB);
-        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        }
         if (operator === "+") {
             if (numA < 1000 && numB < 1000) {
             fillInNumberLine(numB);
+            }else {
+                largeNumbers();
             }
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        }
-        if (operator === "-") {
+        } else if (operator === "-") {
             if (numA < 1000 && numB < 1000) {
             fillInSubtractionNumberLine(numB);
+            }else {
+                largeNumbers();
             }
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        } else if (operator === "*"){
+            if (numA <= 20 && numB <= 20) {
+            createMultDots(numB);
+            }else {
+                largeNumbers();
+            }
+        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        } else if(operator === "/") {
+            let answerRounded = Math.floor(answer);
+            let remainder = numA % numB;
+            if (numB <= 20 && (numA/numB) <= 25) {
+            createDivCircles();
+            createEndDivDots(answerRounded, numB, numA);
+            }else {
+                largeNumbers();
+            }
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            if(!remainder) {
+                equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            } else {
+                    equationVisual.innerHTML = 
+                        numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answerRounded + 'e' + 7) + "e-" + 7) + " with remainder " + remainder
+            };
         }
     } else {
         currentDisplay.innerHTML = "ERROR";
