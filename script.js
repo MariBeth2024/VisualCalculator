@@ -153,7 +153,7 @@ function readBackspace() {
         equationVisual.innerHTML = numA;
     } else {
         numB = numB.slice(0, -1);
-        currentDisplay.innerHTML = numA + operator + numB;
+        currentDisplay.innerHTML = numA + " " + operator + " " + numB;
         equationVisual.innerHTML = numA + " " + operator + " " + numB;
     }
 }
