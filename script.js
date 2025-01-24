@@ -50,7 +50,7 @@ function readNum(sentNum) {
         equationVisual.innerHTML = numA;
     } else {
         numB += sentNum;
-        currentDisplay.innerHTML = numA + operator + numB;
+        currentDisplay.innerHTML = numA + " " + operator + " " + numB;
         equationVisual.innerHTML = numA + " " + operator + " " + numB;
     } 
 }
@@ -62,17 +62,17 @@ function readOper(sentOper) {
     } else {
         operator = sentOper;
         onNumA = false;
-        currentDisplay.innerHTML = numA + operator;
+        currentDisplay.innerHTML = numA + " " + operator;
         equationVisual.innerHTML = numA + " " + operator;
         //create circles/dots/numberline
-        if(operator === "*") {
-        createMultCircles();
-        }
-        if(operator === "+" && numA < 1000) {
+        if (operator === "+" && numA < 1000) {
             createAddLine();
-        }
-        if(operator === "-" && numA < 1000) {
+        } else if(operator === "-" && numA < 1000) {
             createSubtractionLine();
+        } else if(operator === "*" && numA <= 20) {
+            createMultCircles();
+        } else if (operator === "/" && numA <= 100) {
+            createStartDivDots();
         }
     }
 }
@@ -80,24 +80,46 @@ function readOper(sentOper) {
 function readEnter() {
     let answer = doOperation(parseFloat(numA), parseFloat(numB), operator);
     if(typeof(answer) === "number") {
-        if(operator === "*"){
-            createMultDots(numB);
-        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        }
         if (operator === "+") {
             if (numA < 1000 && numB < 1000) {
             fillInNumberLine(numB);
+            }else {
+                largeNumbers();
             }
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        }
-        if (operator === "-") {
+        } else if (operator === "-") {
             if (numA < 1000 && numB < 1000) {
             fillInSubtractionNumberLine(numB);
+            }else {
+                largeNumbers();
             }
             currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        } else if (operator === "*"){
+            if (numA <= 20 && numB <= 20) {
+            createMultDots(numB);
+            }else {
+                largeNumbers();
+            }
+        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+        } else if(operator === "/") {
+            let answerRounded = Math.floor(answer);
+            let remainder = numA % numB;
+            if (numB <= 20 && (numA/numB) <= 25) {
+            createDivCircles();
+            createEndDivDots(answerRounded, numB, numA);
+            }else {
+                largeNumbers();
+            }
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            if(!remainder) {
+                equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            } else {
+                    equationVisual.innerHTML = 
+                        numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answerRounded + 'e' + 7) + "e-" + 7) + " with remainder " + remainder
+            };
         }
     } else {
         currentDisplay.innerHTML = "ERROR";
@@ -131,7 +153,7 @@ function readBackspace() {
         equationVisual.innerHTML = numA;
     } else {
         numB = numB.slice(0, -1);
-        currentDisplay.innerHTML = numA + operator + numB;
+        currentDisplay.innerHTML = numA + " " + operator + " " + numB;
         equationVisual.innerHTML = numA + " " + operator + " " + numB;
     }
 }
@@ -185,4 +207,11 @@ function createMultDots(numB) {
 
     // Start the recursive function with the first circle
     appendDotGroup(0);
+}
+
+function largeNumbers() {
+    pictureVisual.style.fontSize = "40px";
+    pictureVisual.style.padding = "50px";
+    pictureVisual.style.paddingTop = "100px";
+    pictureVisual.innerHTML = "That's a large number! If you would like to see a visual of the equation, try with smaller numbers! 😁";
 }

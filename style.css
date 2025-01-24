@@ -142,15 +142,32 @@ button:active {
 
 #pictureVisual {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
+    height: 90%;
 }
+
+/* Animation Css */ 
+.countDisplay {
+    height: 30px;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+
+.stack {
+    width: 0px;
+    word-break: break-all;
+}
+
+/*Multiplication and Division */
 
 #circleGroup {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 90%;
+    width: 70%;
 }
 
 .circle {
@@ -165,19 +182,6 @@ button:active {
     justify-content: center;
 }
 
-.countDisplay {
-    height: 30px;
-    font-size: 25px;
-    font-weight: 700;
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
-}
-
-.stack {
-    width: 0px;
-    word-break: break-all;
-}
-
 .dotGroup {
     display: flex;
     flex-direction: row;
@@ -188,12 +192,22 @@ button:active {
     width: 140px;
 }
 
-.dot, .startDot {
-    width: 20px;               /* Set width */
-    height: 20px;              /* Set height to the same as width for a circle */
-    background-color: #C392D2; /* Set background color */
+.startDotGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 10px;
+    width: 30%;
+    max-width: 320px;
+}
+
+.dot {
+    width: 20px;              
+    height: 20px;              
+    background-color: #C392D2; 
     border: 1px solid black;
-    border-radius: 50%;          /* Make it a circle */
+    border-radius: 50%;          
     margin: 5px;
 }
 
@@ -220,11 +234,6 @@ They begin with an opacity of 0 and then fade to 1. */
 .fade-target.fade-in {
     opacity: 1;
 }
-
-/* .dotGroup {
-    border: 2px solid black;
-} */
-
 
 /* Addition CSS */
 
@@ -403,12 +412,3 @@ They begin with an opacity of 0 and then fade to 1. */
         font-weight: bold;
         z-index: 2; /* Ensure the number is above the star */
     }
-.startDotGroup {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 10px;
-    width: 320px;
-}
