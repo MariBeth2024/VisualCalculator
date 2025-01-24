@@ -50,7 +50,7 @@ function readNum(sentNum) {
         equationVisual.innerHTML = numA;
     } else {
         numB += sentNum;
-        currentDisplay.innerHTML = numA + operator + numB;
+        currentDisplay.innerHTML = numA + " " + operator + " " + numB;
         equationVisual.innerHTML = numA + " " + operator + " " + numB;
     } 
 }
@@ -62,17 +62,17 @@ function readOper(sentOper) {
     } else {
         operator = sentOper;
         onNumA = false;
-        currentDisplay.innerHTML = numA + operator;
+        currentDisplay.innerHTML = numA + " " + operator;
         equationVisual.innerHTML = numA + " " + operator;
         //create circles/dots/numberline
-        if(operator === "*") {
-        createMultCircles();
-        }
-        if(operator === "+" && numA < 1000) {
+        if (operator === "+" && numA < 1000) {
             createAddLine();
-        }
-        if(operator === "-" && numA < 1000) {
+        } else if(operator === "-" && numA < 1000) {
             createSubtractionLine();
+        } else if(operator === "*" && numA <= 20) {
+            createMultCircles();
+        } else if (operator === "/" && numA <= 100) {
+            createStartDivDots();
         }
     }
 }
