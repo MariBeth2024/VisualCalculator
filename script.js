@@ -208,3 +208,10 @@ function createMultDots(numB) {
     // Start the recursive function with the first circle
     appendDotGroup(0);
 }
+
+function largeNumbers() {
+    pictureVisual.style.fontSize = "40px";
+    pictureVisual.style.padding = "50px";
+    pictureVisual.style.paddingTop = "100px";
+    pictureVisual.innerHTML = "That's a large number! If you would like to see a visual of the equation, try with smaller numbers! 😁";
+}
