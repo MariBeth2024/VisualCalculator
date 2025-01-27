@@ -67,6 +67,7 @@ function readOper(sentOper) {
         //create circles/dots/numberline
         if (operator === "+" && numA < 1000) {
             // createAddLine();
+            initializeCanvas();
             createAddLine2(numA);
         } else if(operator === "-" && numA < 1000) {
             createSubtractionLine();
@@ -144,8 +145,9 @@ function readClear() {
     operator = "";
     currentDisplay.innerHTML = "";
     equationVisual.innerHTML = "";
-    pictureVisual.innerHTML = '<canvas id="canvas"></canvas>';
-    initializeCanvas();
+    pictureVisual.innerHTML = "";
+    // pictureVisual.innerHTML = '<canvas id="canvas"></canvas>';
+    // initializeCanvas();
     onNumA = true;
 }
 
