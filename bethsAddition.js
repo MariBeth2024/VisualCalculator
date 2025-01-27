@@ -1,14 +1,14 @@
 function initializeCanvas() {
-    const canvas = document.getElementById('canvas');
+    const pictureVisualDiv = document.getElementById("pictureVisual"); 
+    const canvas = document.createElement("canvas");
+    canvas.id = "canvas";
+    pictureVisualDiv.appendChild(canvas);
     const rect = canvas.getBoundingClientRect();
 
     //Set canvas dimensions to match CSS-rendered size
     canvas.width = rect.width;
     canvas.height = rect.height;
 }
-
-// Initialize canvas
-initializeCanvas();
 
 function createAddLine2(numA) {
     const canvas = document.getElementById('canvas')
@@ -197,5 +197,6 @@ function animateAddition(numA, numB) {
 
 
 //Attach to global scope
+window.initializeCanvas = initializeCanvas;
 window.createAddLine2 = createAddLine2;
 window.animateAddition = animateAddition;
