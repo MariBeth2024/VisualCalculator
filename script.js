@@ -66,15 +66,14 @@ function readOper(sentOper) {
         equationVisual.innerHTML = numA + " " + operator;
         //create circles/dots/numberline
         if (operator === "+" && numA < 1000) {
-            createAddLine();
+            // createAddLine();
+            createAddLine2(numA);
         } else if(operator === "-" && numA < 1000) {
             createSubtractionLine();
         } else if(operator === "*" && numA <= 20) {
             createMultCircles();
         } else if (operator === "/" && numA <= 100) {
             createStartDivDots();
-        } else if(operator === "+") {
-            
         }
     }
 }
@@ -84,7 +83,8 @@ function readEnter() {
     if(typeof(answer) === "number") {
         if (operator === "+") {
             if (numA < 1000 && numB < 1000) {
-            fillInNumberLine(numB);
+                // fillInNumberLine(numB);
+                animateAddition(numA, numB);
             }else {
                 largeNumbers();
             }
@@ -92,7 +92,7 @@ function readEnter() {
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         } else if (operator === "-") {
             if (numA < 1000 && numB < 1000) {
-            fillInSubtractionNumberLine(numB);
+                fillInSubtractionNumberLine(numB);
             }else {
                 largeNumbers();
             }
@@ -100,12 +100,12 @@ function readEnter() {
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         } else if (operator === "*"){
             if (numA <= 20 && numB <= 20) {
-            createMultDots(numB);
+                createMultDots(numB);
             }else {
                 largeNumbers();
             }
-        currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
-        equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            currentDisplay.innerHTML = Number(Math.round(answer + 'e' + 7) + "e-" + 7);
+            equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         } else if(operator === "/") {
             let answerRounded = Math.floor(answer);
             let remainder = numA % numB;
@@ -145,6 +145,7 @@ function readClear() {
     currentDisplay.innerHTML = "";
     equationVisual.innerHTML = "";
     pictureVisual.innerHTML = '<canvas id="canvas"></canvas>';
+    initializeCanvas();
     onNumA = true;
 }
 

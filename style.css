@@ -126,9 +126,11 @@ button:active {
 #outerVisual {
     border: 5px solid #626161;
     border-radius: 10px;
-    width: 800px;
+    width: 70vw;
     height: 80vh;
     margin-left: 70px;
+
+    /* Are these two necessary? */
     display: flex;
     flex-direction: column;
 }
@@ -282,6 +284,17 @@ They begin with an opacity of 0 and then fade to 1. */
     background-color: black;
     height: 30px;
     width: 5px;
+}
+
+/* Beth's addition CSS */
+
+#canvas {
+    width: 100%;
+    height: auto;
+    min-width: 800px;
+    min-height: 400px;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* Subtraction CSS */
