@@ -15,7 +15,7 @@ function createAddLine2(numA) {
     const ctx = canvas.getContext('2d');
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const lineLocation = canvasHeight*(2/3);
+    const lineLocation = canvasHeight*(3/4);
 
     ctx.fillStyle = 'black';
     ctx.fillRect(0, lineLocation, canvasWidth, 3);  //creates number line
@@ -32,7 +32,7 @@ function animateAddition(numA, numB) {
     const ctx = canvas.getContext('2d');
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const lineLocation = canvasHeight*(2/3);
+    const lineLocation = canvasHeight*(3/4);
 
     let frameY = 0;
     let arrowState = 'rightArrow'
@@ -40,6 +40,7 @@ function animateAddition(numA, numB) {
     arrowImage.src = 'arrowSprites.png';
     const spriteWidth = 190;
     const spriteHeight = 130;
+
     let gameFrame = 0;
     const staggerFrames = 10;  //a lower number gives a higher speed to the animation
 
@@ -59,6 +60,15 @@ function animateAddition(numA, numB) {
     const hundredsScale = 4;
     const tensScale = 2;
 
+    // measures and then centers the text above the arrows +1, +10, +100
+    const textWidth100 = ctx.measureText("+100").width;
+    const centeredText100 = (units*hundredsScale)/2 - textWidth100/2;
+    const textWidth10 = ctx.measureText("+10").width;
+    const centeredText10 = (units*tensScale)/2 - textWidth10/2;
+    const textWidth1 = ctx.measureText("+1").width;
+    const centeredText1 = (units)/2 - textWidth1/2;
+    const textHeight = ctx.measureText("+100").height;
+
     const arrowScale = 127;     //width of arrow in px, equivalent to one unit on canvas
     const leftMarginPX = 25;    //left margin on sprite
     const topMarginAndArrowPX = 106;   //top margin + height of arrow on sprite
@@ -66,6 +76,13 @@ function animateAddition(numA, numB) {
     const topMarginAndArrow = (topMarginAndArrowPX/arrowScale)*units;  //top margin & arrow scaled in terms of units
     const arrowWidth = (spriteWidth/arrowScale)*units;      //arrowWidth scaled in terms of units
     const arrowHeight = (spriteHeight/arrowScale)*units;        //arrowHeight scaled in terms of units
+
+    const starImage = new Image();
+    starImage.src = 'starV1.png';
+    const starPXWidth = 405;
+    const starPXHeight = 388;
+    const starWidth = units/3;      // creates a star that is 1/3 as wide as the arrow
+    const starHeight = (starPXHeight/starPXWidth)*units/3;  // scales down the height to align with the scale of the width
 
     const spriteAnimations = [];
     const animationStates = [
@@ -117,6 +134,12 @@ function animateAddition(numA, numB) {
                     lineLocation - topMarginAndArrow*hundredsScale,     // canvas placement of arrow in Y direction
                     arrowWidth*hundredsScale,       // canvas size of arrow width
                     arrowHeight*hundredsScale)      // canvas size of arrow height
+                ctx.drawImage(starImage,  //source file of star image
+                    locationDash + units*hundredsScale/2 - starWidth*hundredsScale/2,        // canvas placement of arrow in X direction
+                    lineLocation - topMarginAndArrow*hundredsScale - starHeight*hundredsScale/2,     // canvas placement of arrow in Y direction
+                    starWidth*hundredsScale,       // canvas size of star width
+                    starHeight*hundredsScale)      // canvas size of star height
+                ctx.fillText("+100", locationDash + centeredText100, lineLocation - topMarginAndArrow*hundredsScale + 10);
                 if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
                     animationArray.push(((frame, dashX) => () => 
                         ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
@@ -124,14 +147,17 @@ function animateAddition(numA, numB) {
                             lineLocation - topMarginAndArrow*hundredsScale,       
                             arrowWidth*hundredsScale,                             
                             arrowHeight*hundredsScale))                      
-                            (frameY, locationDash))                     
+                            (frameY, locationDash)) ;
+                    animationArray.push(((dashX) => () => {
+                        ctx.fillText("+100", dashX + centeredText100, lineLocation - topMarginAndArrow*hundredsScale + 10);
+                    })(locationDash));                    
                     locationDash += units*hundredsScale;
                     currentNum += 100;
                     animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
                     animationArray.push(((current, dashX) => () => {
                         const textWidth = ctx.measureText(current).width;
                         const centeredText = dashX - textWidth / 2;
-                        ctx.fillText(current, centeredText, lineLocation + 25)
+                        ctx.fillText(current, centeredText, lineLocation + 30)
                     })(currentNum, locationDash));
                     hundreds -= 100;
                 }
@@ -140,7 +166,13 @@ function animateAddition(numA, numB) {
                     locationDash - leftMargin*tensScale,      
                     lineLocation - topMarginAndArrow*tensScale,     
                     arrowWidth*tensScale,      
-                    arrowHeight*tensScale)      
+                    arrowHeight*tensScale) 
+                ctx.drawImage(starImage,  
+                    locationDash + units*tensScale/2 - starWidth*tensScale/2,       
+                    lineLocation - topMarginAndArrow*tensScale - starHeight*tensScale/2,   
+                    starWidth*tensScale,      
+                    starHeight*tensScale)    
+                ctx.fillText("+10", locationDash + centeredText10, lineLocation - topMarginAndArrow*tensScale + 10);     
                 if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
                     animationArray.push(((frame, dashX) => () => 
                         ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
@@ -149,13 +181,16 @@ function animateAddition(numA, numB) {
                             arrowWidth*tensScale,                             
                             arrowHeight*tensScale))                      
                             (frameY, locationDash))  
+                    animationArray.push(((dashX) => () => {
+                        ctx.fillText("+10", dashX + centeredText10, lineLocation - topMarginAndArrow*tensScale + 10);
+                    })(locationDash)); 
                     locationDash += units*tensScale;
                     currentNum += 10;
                     animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
                     animationArray.push(((current, dashX) => () => {
                         const textWidth = ctx.measureText(current).width;
                         const centeredText = dashX - textWidth / 2;
-                        ctx.fillText(current, centeredText, lineLocation + 25)
+                        ctx.fillText(current, centeredText, lineLocation + 30)
                     })(currentNum, locationDash));
                     tens -= 10;
                 }
@@ -164,7 +199,13 @@ function animateAddition(numA, numB) {
                     locationDash - leftMargin,      
                     lineLocation - topMarginAndArrow,     
                     arrowWidth,      
-                    arrowHeight)   
+                    arrowHeight)  
+                ctx.drawImage(starImage, 
+                    locationDash + units/2 - starWidth/2,    
+                    lineLocation - topMarginAndArrow - starHeight/2, 
+                    starWidth,   
+                    starHeight)   
+                ctx.fillText("+1", locationDash + centeredText1, lineLocation - topMarginAndArrow + 10); 
                 if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
                     animationArray.push(((frame, dashX) => () => 
                         ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
@@ -172,14 +213,17 @@ function animateAddition(numA, numB) {
                             lineLocation - topMarginAndArrow,       
                             arrowWidth,                             
                             arrowHeight))                      
-                            (frameY, locationDash))                    
+                            (frameY, locationDash))    
+                    animationArray.push(((dashX) => () => {
+                        ctx.fillText("+1", dashX + centeredText1, lineLocation - topMarginAndArrow + 10);
+                    })(locationDash));                 
                     locationDash += units;
                     currentNum += 1;
                     animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
                     animationArray.push(((current, dashX) => () => {
                         const textWidth = ctx.measureText(current).width;
                         const centeredText = dashX - textWidth / 2;
-                        ctx.fillText(current, centeredText, lineLocation + 25)
+                        ctx.fillText(current, centeredText, lineLocation + 30)
                     })(currentNum, locationDash));
                     ones--;
                 }
