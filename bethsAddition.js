@@ -67,7 +67,6 @@ function animateAddition(numA, numB) {
     const centeredText10 = (units*tensScale)/2 - textWidth10/2;
     const textWidth1 = ctx.measureText("+1").width;
     const centeredText1 = (units)/2 - textWidth1/2;
-    const textHeight = ctx.measureText("+100").height;
 
     const arrowScale = 127;     //width of arrow in px, equivalent to one unit on canvas
     const leftMarginPX = 25;    //left margin on sprite

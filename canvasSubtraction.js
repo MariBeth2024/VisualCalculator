@@ -28,11 +28,11 @@ function animateSubtraction(numA, numB) {
     arrowImage.src = 'arrowSprites.png';
     const spriteWidth = 190;
     const spriteHeight = 130;
+
     let gameFrame = 0;
     const staggerFrames = 10;  //a lower number gives a higher speed to the animation
 
     let locationDash = canvasWidth - 20;  //starting x px value of the initial dash on number line
-    console.log("locationDash", locationDash);
     let currentNum = parseFloat(numA); //keeps track of current number on number line
 
     let hundreds = Math.floor(numB/100) * 100;
@@ -48,6 +48,14 @@ function animateSubtraction(numA, numB) {
     const hundredsScale = 4;
     const tensScale = 2;
 
+    // measures and then centers the text above the arrows +1, +10, +100
+    const textWidth100 = ctx.measureText("+100").width;
+    const centeredText100 = (units*hundredsScale)/2 + textWidth100/4;
+    const textWidth10 = ctx.measureText("+10").width;
+    const centeredText10 = (units*tensScale)/2 + textWidth10/4;
+    const textWidth1 = ctx.measureText("+1").width;
+    const centeredText1 = (units)/2 + textWidth1/4;
+
     const arrowScale = 127;     //width of arrow in px, equivalent to one unit on canvas
     const rightMarginPX = 36;    //left margin on sprite
     const topMarginAndArrowPX = 106;   //top margin + height of arrow on sprite
@@ -55,6 +63,14 @@ function animateSubtraction(numA, numB) {
     const topMarginAndArrow = (topMarginAndArrowPX/arrowScale)*units;  //top margin & arrow scaled in terms of units
     const arrowWidth = (spriteWidth/arrowScale)*units;      //arrowWidth scaled in terms of units
     const arrowHeight = (spriteHeight/arrowScale)*units;        //arrowHeight scaled in terms of units
+
+    const starImage = new Image();
+    starImage.src = 'starV1.png';
+    const starPXWidth = 405;
+    const starPXHeight = 388;
+    const starWidth = units/3;      // creates a star that is 1/3 as wide as the arrow
+    const starHeight = (starPXHeight/starPXWidth)*units/3;  // scales down the height to align with the scale of the width
+
 
     const spriteAnimations = [];
     const animationStates = [
@@ -106,14 +122,25 @@ function animateSubtraction(numA, numB) {
                     lineLocation - topMarginAndArrow*hundredsScale,     // canvas placement of arrow in Y direction
                     arrowWidth*hundredsScale,       // canvas size of arrow width
                     arrowHeight*hundredsScale)      // canvas size of arrow height
-                if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
+                    
+                    ctx.drawImage(starImage,  //source file of star image
+                    locationDash - units*hundredsScale/2 - rightMargin*hundredsScale/2,        // canvas placement of arrow in X direction
+                    lineLocation - topMarginAndArrow*hundredsScale - starHeight*hundredsScale/2,     // canvas placement of arrow in Y direction
+                    starWidth*hundredsScale,       // canvas size of star width
+                    starHeight*hundredsScale)      // canvas size of star height
+                    ctx.fillText("-100", locationDash - centeredText100, lineLocation - topMarginAndArrow*hundredsScale + 10);
+                    
+                    if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
                     animationArray.push(((frame, dashX) => () => 
                         ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
                             dashX - units*hundredsScale - rightMargin*hundredsScale,        
                             lineLocation - topMarginAndArrow*hundredsScale,       
                             arrowWidth*hundredsScale,                             
                             arrowHeight*hundredsScale))                      
-                            (frameY, locationDash))    
+                            (frameY, locationDash))  
+                    animationArray.push(((dashX) => () => {
+                    ctx.fillText("-100", dashX - centeredText100, lineLocation - topMarginAndArrow*hundredsScale + 10);
+                    })(locationDash));   
                     locationDash -= units*hundredsScale;
                     currentNum -= 100;
                     animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
@@ -129,7 +156,15 @@ function animateSubtraction(numA, numB) {
                     locationDash - units*tensScale - rightMargin*tensScale,      
                     lineLocation - topMarginAndArrow*tensScale,     
                     arrowWidth*tensScale,      
-                    arrowHeight*tensScale)      
+                    arrowHeight*tensScale) 
+                    
+                ctx.drawImage(starImage,  
+                    locationDash - units*tensScale/2 - rightMargin*tensScale/2,        
+                    lineLocation - topMarginAndArrow*tensScale - starHeight*tensScale/2,   
+                    starWidth*tensScale,      
+                    starHeight*tensScale)    
+                ctx.fillText("-10", locationDash - centeredText10, lineLocation - topMarginAndArrow*tensScale + 10);     
+                    
                 if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
                     animationArray.push(((frame, dashX) => () => 
                         ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
@@ -138,6 +173,9 @@ function animateSubtraction(numA, numB) {
                             arrowWidth*tensScale,                             
                             arrowHeight*tensScale))                      
                             (frameY, locationDash))  
+                    animationArray.push(((dashX) => () => {
+                        ctx.fillText("-10", dashX - centeredText10, lineLocation - topMarginAndArrow*tensScale + 10);
+                    })(locationDash));     
                     locationDash -= units*tensScale;
                     currentNum -= 10;
                     animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
@@ -153,7 +191,14 @@ function animateSubtraction(numA, numB) {
                     locationDash - units - rightMargin,      
                     lineLocation - topMarginAndArrow,     
                     arrowWidth,      
-                    arrowHeight)   
+                    arrowHeight) 
+                ctx.drawImage(starImage, 
+                    locationDash - units/2 - rightMargin/2,     
+                    lineLocation - topMarginAndArrow - starHeight/2, 
+                    starWidth,   
+                    starHeight)   
+                ctx.fillText("-1", locationDash - centeredText1, lineLocation - topMarginAndArrow + 10); 
+                     
                 if((staggerFrames*totalFrames-1) === gameFrame%(staggerFrames*totalFrames)) {
                     animationArray.push(((frame, dashX) => () => 
                         ctx.drawImage(arrowImage, 0, frame, spriteWidth, spriteHeight, 
@@ -161,7 +206,11 @@ function animateSubtraction(numA, numB) {
                             lineLocation - topMarginAndArrow,       
                             arrowWidth,                             
                             arrowHeight))                      
-                            (frameY, locationDash))                    
+                            (frameY, locationDash))   
+                    animationArray.push(((dashX) => () => {
+                            ctx.fillText("-1", dashX - centeredText1, lineLocation - topMarginAndArrow + 10);
+                    })(locationDash)); 
+
                     locationDash -= units;
                     currentNum -= 1;
                     animationArray.push(((dashX) => () => ctx.fillRect(dashX, lineLocation - 7, 3, 15))(locationDash));
