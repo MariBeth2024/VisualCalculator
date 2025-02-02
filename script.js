@@ -70,7 +70,8 @@ function readOper(sentOper) {
             initializeCanvas();
             createAddLine2(numA);
         } else if(operator === "-" && numA < 1000) {
-            createSubtractionLine();
+            initializeCanvas();
+            createSubtractionLine2(numA);
         } else if(operator === "*" && numA <= 20) {
             createMultCircles();
         } else if (operator === "/" && numA <= 100) {
@@ -93,7 +94,7 @@ function readEnter() {
             equationVisual.innerHTML = numA + " " + operator + " " + numB + " " + "=" + " " + Number(Math.round(answer + 'e' + 7) + "e-" + 7);
         } else if (operator === "-") {
             if (numA < 1000 && numB < 1000) {
-                fillInSubtractionNumberLine(numB);
+                animateSubtraction(numA, numB);
             }else {
                 largeNumbers();
             }
