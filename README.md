@@ -7,6 +7,7 @@ This is our visual calculator!
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Contact](#contact)
 
 ## Introduction
 Our Visual Calculator was designed by two teacher-programmers who wanted to create a method for students to visualize the math process that was occuring. The four main operations - add, subtract, multiply, and divide - are represented through the use of animated number lines or dot groupings. This takes calculator use from an abstract tool to something more concrete that reinforces common math models.
