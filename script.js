@@ -9,6 +9,7 @@ let equationVisual = document.getElementById("equationVisual");
 let pictureVisual = document.getElementById("pictureVisual");
 let dec = document.getElementById("dec");
 
+
 function add(a, b) {
     return a + b;
 };
@@ -135,7 +136,7 @@ function readEnter() {
         numB = "";
         operator = "";
     }
-    resetValues();
+     resetValues();
 }
 
 function readClear() {
@@ -164,5 +165,5 @@ function largeNumbers() {
     pictureVisual.style.fontSize = "40px";
     pictureVisual.style.padding = "50px";
     pictureVisual.style.paddingTop = "100px";
-    pictureVisual.innerHTML = "That's a large number! If you would like to see a visual of the equation, try with smaller numbers! 😁";
+    pictureVisual.innerHTML = "Too big! To see a picture try smaller numbers! 😁";
 }
