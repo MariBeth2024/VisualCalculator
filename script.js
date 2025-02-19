@@ -9,6 +9,7 @@ let equationVisual = document.getElementById("equationVisual");
 let pictureVisual = document.getElementById("pictureVisual");
 let dec = document.getElementById("dec");
 
+
 function add(a, b) {
     return a + b;
 };
@@ -66,12 +67,11 @@ function readOper(sentOper) {
         equationVisual.innerHTML = numA + " " + operator;
         //create circles/dots/numberline
         if (operator === "+" && numA < 1000) {
-            // createAddLine();
             initializeCanvas();
-            createAddLine2(numA);
+            createAddLine(numA);
         } else if(operator === "-" && numA < 1000) {
             initializeCanvas();
-            createSubtractionLine2(numA);
+            createSubtractionLine(numA);
         } else if(operator === "*" && numA <= 20) {
             createMultCircles();
         } else if (operator === "/" && numA <= 100) {
@@ -85,7 +85,6 @@ function readEnter() {
     if(typeof(answer) === "number") {
         if (operator === "+") {
             if (numA < 1000 && numB < 1000) {
-                // fillInNumberLine(numB);
                 animateAddition(numA, numB);
             }else {
                 largeNumbers();
@@ -137,7 +136,7 @@ function readEnter() {
         numB = "";
         operator = "";
     }
-    resetValues();
+     resetValues();
 }
 
 function readClear() {
@@ -147,8 +146,6 @@ function readClear() {
     currentDisplay.innerHTML = "";
     equationVisual.innerHTML = "";
     pictureVisual.innerHTML = "";
-    // pictureVisual.innerHTML = '<canvas id="canvas"></canvas>';
-    // initializeCanvas();
     onNumA = true;
 }
 
