@@ -165,5 +165,5 @@ function largeNumbers() {
     pictureVisual.style.fontSize = "40px";
     pictureVisual.style.padding = "50px";
     pictureVisual.style.paddingTop = "100px";
-    pictureVisual.innerHTML = "Too big! To see a picture try smaller numbers! 😁";
+    pictureVisual.innerHTML = "Too big! Try smaller numbers. 😁";
 }
